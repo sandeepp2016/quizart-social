@@ -32,6 +32,17 @@ services:
     restart: always
     depends_on:
       - microservice-mesh-base
+  microservice-analytics:
+    container_name: microservice-analytics
+    build: microservices/microservice-analytics
+    image: boilerplate/analytics
+    network_mode: host
+    restart: always
+    depends_on:
+      - microservice-mesh-base
+      - db
+    environment:
+      MONGO_URL: 'mongodb://localhost:27017/boilerplate-production'
   db:
     container_name: mongo
     image: mvertes/alpine-mongo
