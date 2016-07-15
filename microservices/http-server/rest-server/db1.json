@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "Name": "Vigneshwar",
+      "img": "http://lorempixel.com/100/100/nature/"
+    },
+    {
+      "id": 2,
+      "Name": "Sandeep",
+      "img": "http://lorempixel.com/100/100/nature/"
+    },
+    {
+      "id": 3,
+      "Name": "Ram",
+      "img": "http://lorempixel.com/100/100/nature/"
+    },
+    {
+      "id": 4,
+      "Name": "Preethi",
+      "img": "http://lorempixel.com/100/100/nature/"
+    },
+    {
+      "id": 5,
+      "Name": "Deepak",
+      "img": "http://lorempixel.com/100/100/nature/"
+    },
+    {
+      "id": 6,
+      "Name": "Sandeep NS",
+      "img": "http://lorempixel.com/100/100/nature/"
+    }
+  ],
+  "groups": [
+    {
+      "groupname": "Welcome",
+      "users": "[\"Ram\"]",
+      "id": 6
+    },
+    {
+      "groupname": "test4",
+      "users": "[\"Sandeep NS\",\"Sandeep\"]",
+      "id": 5
+    },
+    {
+      "groupname": "test2",
+      "users": "[\"Preethi\",\"Sandeep\"]",
+      "id": 7
+    },
+    {
+      "groupname": "test10",
+      "users": "[\"Ram\",\"Deepak\",\"Sandeep NS\",\"Sandeep\"]",
+      "id": 8
+    },
+    {
+      "groupname": "test20",
+      "users": "[\"Vigneshwar\",\"Ram\",\"Sandeep\"]",
+      "id": 9
+    },
+    {
+      "groupname": "Test",
+      "users": "[\"Vigneshwar\",\"Sandeep\"]",
+      "id": 10
+    },
+    {
+      "groupname": "Test5",
+      "users": "[\"Sandeep\"]",
+      "id": 11
+    },
+    {
+      "groupname": "QuizRTtest2",
+      "users": "[\"Vigneshwar\",\"Sandeep\"]",
+      "id": 12
+    }
+  ]
+}

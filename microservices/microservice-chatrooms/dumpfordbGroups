@@ -1,0 +1,50 @@
+[
+  {
+    "_id": "577671933d76b08c64fa2733",
+    "groupname": "QuizRTSocial",
+    "groupavatar": "http://lorempixel.com/100/100",
+    "topicid": "1435"
+  },
+  {
+    "_id": "57767193dadcd5d4568bf40b",
+    "groupname": "Test1",
+    "groupavatar": "http://lorempixel.com/100/100",
+    "topicid": "3398"
+  },
+  {
+    "_id": "57767193c810414cd633942e",
+    "groupname": "Test2",
+    "groupavatar": "http://lorempixel.com/100/100",
+    "topicid": "3792"
+  },
+  {
+    "_id": "57767193ac42743c69ed7896",
+    "groupname": "Test3",
+    "groupavatar": "http://lorempixel.com/100/100",
+    "topicid": "1906"
+  },
+  {
+    "_id": "577671935ae1e0ad8dd40fab",
+    "groupname": "nisi",
+    "groupavatar": "http://lorempixel.com/100/100",
+    "topicid": "2963"
+  },
+  {
+    "_id": "5776719335beb6ded01c0fa8",
+    "groupname": "aliquip",
+    "groupavatar": "http://lorempixel.com/100/100",
+    "topicid": "2389"
+  },
+  {
+    "_id": "57767193cc955ce6d4ba4b63",
+    "groupname": "aliqua",
+    "groupavatar": "http://lorempixel.com/100/100",
+    "topicid": "2349"
+  },
+  {
+    "_id": "57767193474cccaefe608fcb",
+    "groupname": "nisi",
+    "groupavatar": "http://lorempixel.com/100/100",
+    "topicid": "3640"
+  }
+]

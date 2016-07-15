@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"chatroom-test.friends"},{"v":1,"key":{"subject":1},"name":"subject_1","ns":"chatroom-test.friends","background":true}]}

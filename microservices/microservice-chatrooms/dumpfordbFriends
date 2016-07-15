@@ -1,0 +1,305 @@
+[
+  {
+    "_id": "57765c2d7ad3e4a7f0751cf9",
+    "subject": "vigneshwar1@gmail.com@gmail.com",
+    "relation": "Sent a Friend Request",
+    "object": "sandeep1@gmail.com@gmail.com"
+  },
+  {
+    "_id": "57765c2d909152b118168527",
+    "subject": "vigneshwar1@gmail.com@gmail.com",
+    "relation": "Sent a Friend Request",
+    "object": "deepak1@gmail.com@gmail.com"
+  },
+  {
+    "_id": "57765c2d14656b3aaa4f9f3f",
+    "subject": "vigneshwar1@gmail.com@gmail.com",
+    "relation": "Sent a Friend Request",
+    "object": "ram@gmail.com@gmail.com"
+  },
+  {
+    "_id": "57765c2d9b9e9ba5feb79e65",
+    "subject": "vigneshwar1@gmail.com@gmail.com",
+    "relation": "Sent a Friend Request",
+    "object": "preethi1@gmail.com@gmail.com"
+  },
+  {
+    "_id": "57765c2d7479a9d79c5a4158",
+    "subject": "Ivy Combs",
+    "relation": "Sent a Friend Request",
+    "object": "Paige Vazquez"
+  },
+  {
+    "_id": "57765c2d60c0653265c06dee",
+    "subject": "Jackie Glenn",
+    "relation": "Sent a Friend Request",
+    "object": "Underwood Barrera"
+  },
+  {
+    "_id": "57765c2d744b55bbc01eb520",
+    "subject": "Gertrude Ortiz",
+    "relation": "Sent a Friend Request",
+    "object": "Leann Lewis"
+  },
+  {
+    "_id": "57765c2d583e8a1aa348012e",
+    "subject": "Byers Mcmillan",
+    "relation": "Sent a Friend Request",
+    "object": "Brenda Brock"
+  },
+  {
+    "_id": "57765c2dfb13c6248b1bc862",
+    "subject": "Jody Whitehead",
+    "relation": "Sent a Friend Request",
+    "object": "Terrell Stewart"
+  },
+  {
+    "_id": "57765c2d959e6bde4c29888d",
+    "subject": "Fisher Cline",
+    "relation": "Sent a Friend Request",
+    "object": "Lewis Palmer"
+  },
+  {
+    "_id": "57765c2df6b8773fb68cd2a3",
+    "subject": "Patty Norton",
+    "relation": "Sent a Friend Request",
+    "object": "Flossie Nolan"
+  },
+  {
+    "_id": "57765c2d4be510847953518f",
+    "subject": "Reva Terry",
+    "relation": "Sent a Friend Request",
+    "object": "Hart Murphy"
+  },
+  {
+    "_id": "57765c2d1022ffb7b2b0a7be",
+    "subject": "Fowler Gibbs",
+    "relation": "Sent a Friend Request",
+    "object": "Madeline Sawyer"
+  },
+  {
+    "_id": "57765c2d961051a929e8b3b3",
+    "subject": "Aurora Merritt",
+    "relation": "Sent a Friend Request",
+    "object": "Wilda Huber"
+  },
+  {
+    "_id": "57765c2dbab213ba794c561f",
+    "subject": "Ryan House",
+    "relation": "Sent a Friend Request",
+    "object": "Monica Rodgers"
+  },
+  {
+    "_id": "57765c2d2fec0b1ceecf4936",
+    "subject": "Malone Vasquez",
+    "relation": "Sent a Friend Request",
+    "object": "Kennedy Douglas"
+  },
+  {
+    "_id": "57765c2d103a0645a393a119",
+    "subject": "Doyle Cohen",
+    "relation": "Sent a Friend Request",
+    "object": "Savannah Valenzuela"
+  },
+  {
+    "_id": "57765c2d14a8c7de0477d0ca",
+    "subject": "Bertha Alvarado",
+    "relation": "Sent a Friend Request",
+    "object": "Anastasia Velez"
+  },
+  {
+    "_id": "5776609fa46a62dcd32093e1",
+    "subject": [
+      "vigneshwar1@gmail.com",
+      "sandeep1@gmail.com"
+    ],
+    "relation": "Friends",
+    "object": "3173"
+  },
+  {
+    "_id": "5776609f99f8acb13bcb0421",
+    "subject": [
+      "vigneshwar1@gmail.com",
+      "deepak1@gmail.com"
+    ],
+    "relation": "Friends",
+    "object": "3479"
+  },
+  {
+    "_id": "5776609ffe83fdd2730168b6",
+    "subject": [
+      "vigneshwar1@gmail.com",
+      "ram@gmail.com"
+    ],
+    "relation": "Friends",
+    "object": "1833"
+  },
+  {
+    "_id": "5776609f10ba892e02ea135f",
+    "subject": [
+      "vigneshwar1@gmail.com",
+      "preethi1@gmail.com"
+    ],
+    "relation": "Friends",
+    "object": "3294"
+  },
+  {
+    "_id": "5776609faa40c918e1a1f039",
+    "subject": [
+      "Nannie Fitzpatrick",
+      "Mindy Finley"
+    ],
+    "relation": "Friends",
+    "object": "3280"
+  },
+  {
+    "_id": "5776609fcfc786093c0ce377",
+    "subject": [
+      "Katie Berg",
+      "Minnie Johns"
+    ],
+    "relation": "Friends",
+    "object": "2868"
+  },
+  {
+    "_id": "5776609ff4ec9c79c6d90595",
+    "subject": [
+      "Berta Parks",
+      "Patrice Hogan"
+    ],
+    "relation": "Friends",
+    "object": "3489"
+  },
+  {
+    "_id": "5776609f789b97da968ae3d4",
+    "subject": [
+      "Murray Valentine",
+      "Jami Clarke"
+    ],
+    "relation": "Friends",
+    "object": "1078"
+  },
+  {
+    "_id": "5776609f7aba9da52e17f9d9",
+    "subject": [
+      "Rae Lucas",
+      "Grace Hall"
+    ],
+    "relation": "Friends",
+    "object": "2224"
+  },
+  {
+    "_id": "5776609f2d55753727ea898c",
+    "subject": [
+      "Wolf Alvarez",
+      "Durham Roth"
+    ],
+    "relation": "Friends",
+    "object": "3632"
+  },
+  {
+    "_id": "5776609f04d14378841f9c8b",
+    "subject": [
+      "Graham Bridges",
+      "Kelsey Estrada"
+    ],
+    "relation": "Friends",
+    "object": "1305"
+  },
+  {
+    "_id": "5776609f628d420bd8e14308",
+    "subject": [
+      "Mavis Vincent",
+      "Pate Ellis"
+    ],
+    "relation": "Friends",
+    "object": "3104"
+  },
+  {
+    "_id": "5776609fa0b7924eb5a15e45",
+    "subject": [
+      "Carly Avery",
+      "Haley Stout"
+    ],
+    "relation": "Friends",
+    "object": "1553"
+  },
+  {
+    "_id": "5776609fae888fab5a7528b4",
+    "subject": [
+      "Garcia Wilson",
+      "Frances Serrano"
+    ],
+    "relation": "Friends",
+    "object": "2758"
+  },
+  {
+    "_id": "5776609f4072bf3a64935fe4",
+    "subject": [
+      "Singleton Stokes",
+      "Sue Kirby"
+    ],
+    "relation": "Friends",
+    "object": "2854"
+  },
+  {
+    "_id": "5776609fbc273909101936df",
+    "subject": [
+      "Lynch Blair",
+      "Tia Jacobs"
+    ],
+    "relation": "Friends",
+    "object": "2645"
+  },
+  {
+    "_id": "5776609f25278194016e1d1a",
+    "subject": [
+      "Jana Stuart",
+      "Rosales Berry"
+    ],
+    "relation": "Friends",
+    "object": "2274"
+  },
+  {
+    "_id": "5776609f1a053c4c8af9b4f6",
+    "subject": [
+      "Shepard Livingston",
+      "Garza Huber"
+    ],
+    "relation": "Friends",
+    "object": "2250"
+  },
+  {
+    "_id": "5776609fd690e392913876bf",
+    "subject": [
+      "Joyner Sharp",
+      "Noreen English"
+    ],
+    "relation": "Friends",
+    "object": "2132"
+  }
+]
+
+db.friends.aggregate([{$match: {relation:"Friends"}},{$match:{subject:"vigneshwar1@gmail.com"}},{$group:{_id:"$subject"}},{$unwind:"$_id"},{$group:{_id:null,tags:{$addToSet:"$_id"}}}])
+{ "_id" : null, "tags" : [ "vigneshwar1@gmail.com", "preethi1@gmail.com", "sandeep1@gmail.com", "ram@gmail.com", "deepak1@gmail.com" ] }
+
+
+db.friends.aggregate([{$match:{relation:"Friends",subject:"vigneshwar1@gmail.com",subject:"sandeep1@gmail.com"}}])
+{ "_id" : "5776609fa46a62dcd32093e1", "subject" : [ "vigneshwar1@gmail.com", "sandeep1@gmail.com" ], "relation" : "Friends", "object" : "3173" }
+
+
+
+describe('Retrieve Friends', function() {
+  it('Retrieve Friends', function(done) {
+    consumerMicroservice.act('role:chat,cmd:getFriendList', accountToCreate, function(err, response) {
+      if(err) { return done(err); }
+      response.should.have.property('response');
+      response.response.should.be.exactly('success');
+      console.log(response.friends);
+      done();
+    });
+  });
+});
+
+
+db.friends.update({subject:"417"},{$pull:{object:"vigneshwar1@gmail.com"}})

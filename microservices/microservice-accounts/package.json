@@ -5,7 +5,7 @@
   "main": "account-plugin.js",
   "scripts": {
     "start": "node account-microservice.js",
-    "test": "grunt test"
+    "test": "node_modules/grunt/bin/grunt test"
   },
   "keywords": [
     "authentication",

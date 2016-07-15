@@ -1,0 +1,19 @@
+{
+  "name": "myfavtopics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "myFav.js",
+  "scripts": {
+     "start": "node myFavService.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  "seneca": "^2.1.0",
+  "seneca-balance-client": "^0.5.0",
+  "seneca-entity": "^1.0.0",
+  "seneca-mesh": "^0.7.0",
+  "seneca-mongo-store": "^0.2.0"
+}
+}

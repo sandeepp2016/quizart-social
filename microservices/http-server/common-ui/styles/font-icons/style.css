@@ -1,0 +1,99 @@
+@font-face {
+	font-family: 'material-ui-icons';
+	src: url('/bower_components/roboto-and-material-icons-fonts/fonts/MaterialIcons-Regular.ttf');
+}
+
+[class^="muidocs-icon-"], [class*=" muidocs-icon-"] {
+	font-family: 'material-ui-icons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.muidocs-icon-action-thumb-up:after {
+    content: "thumb_up";
+}
+.muidocs-icon-content-clear:after {
+    content: "clear";
+}
+
+.muidocs-icon-social-share:after {
+	content: "share";
+}
+
+.muidocs-icon-custom-list:before {
+    content: "list";
+}
+.muidocs-icon-communication-chat:after {
+    content: "chat";
+}
+.muidocs-icon-communication-chat_bubble:after {
+    content: "chat_bubble";
+}
+.muidocs-icon-navigation-close:after {
+    content: "close";
+}
+.muidocs-icon-navigation-arrow_back:after {
+    content: "arrow_back";
+}
+.muidocs-icon-navigation-more_vert:after {
+    content: "more_vert";
+}
+.muidocs-icon-social-group_add:after {
+    content: "group_add";
+}
+.muidocs-icon-social-group:after {
+    content: "group";
+}
+.muidocs-icon-action-search:after {
+    content: "search";
+}
+.muidocs-icon-navigation-refresh:after {
+    content: "refresh";
+}
+.muidocs-icon-action-settings:after {
+    content: "settings";
+}
+.muidocs-icon-action-power_settings_new:after {
+    content: "power_settings_new";
+}
+.muidocs-icon-action-people_outline:after {
+    content: "people_outline";
+}
+.muidocs-icon-action-exit_to_app:after {
+    content: "exit_to_app";
+}
+.muidocs-icon-av-album:after {
+    content: "album";
+}
+.muidocs-icon-image-edit:after {
+    content: "edit";
+}
+.muidocs-icon-social-person:after {
+    content: "person";
+}
+.muidocs-icon-social-person_add:after {
+    content: "person_add";
+}
+.muidocs-icon-social-notifications:after {
+    content: "notifications";
+}
+.muidocs-icon-social-people_outline:after {
+    content: "people_outline";
+}
+.muidocs-icon-social-people:after {
+    content: "people";
+}
+.muidocs-icon-action-favorite:after {
+    content: "favorite";
+}
+.muidocs-icon-action-favorite_border:after {
+    content: "favorite_border";
+}

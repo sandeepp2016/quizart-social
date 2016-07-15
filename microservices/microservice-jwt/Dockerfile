@@ -1,4 +1,4 @@
-FROM boilerplate/base-image
+FROM quizrtsocial/base-image
 
 WORKDIR /usr/src/service
 

@@ -15,6 +15,18 @@ exports = module.exports = function(options) {
     });
   });
 
+
+  this.add('role:jwt,cmd:generateGoogleToken', function(msg, respond) {
+      // var token = jwt.sign(msg.data.user,msg.data.secret);
+      console.log("Inside generateGoogleToken the msg is,==========",msg);
+      console.log("Inside generateGoogleToken the msg is,==========",msg.data.user);
+      return jwt.sign({}, secret, { subject: msg.data.user }, function(err, token) {
+        if(err) { return respond(err); }
+        return respond(null, {token, response: 'success'});
+      });
+
+  });
+
   this.add('role:jwt,cmd:verify', function(msg, respond) {
     var options = {
       clockTolerance: 30

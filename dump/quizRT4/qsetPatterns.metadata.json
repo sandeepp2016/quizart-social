@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"quizRT4.qsetPatterns"},{"v":1,"unique":true,"key":{"patternName":1},"name":"patternName_1","ns":"quizRT4.qsetPatterns","background":true}]}

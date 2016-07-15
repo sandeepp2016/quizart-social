@@ -7,6 +7,7 @@ const env = process.env.NODE_ENV || 'dev';
 var baseMicroservice = seneca();
 var accountMicroservice = seneca();
 var jwtMicroservice = seneca();
+var leaderboardMicroservice = seneca();
 
 decorator.startAllMicroservices = function(cb) {
   async.parallel({
@@ -16,7 +17,7 @@ decorator.startAllMicroservices = function(cb) {
     },
     startAccountMicroservice: function(done) {
       accountMicroservice.use('account-microservice', {
-        mongoUrl: 'mongodb://localhost:27017/boilerplate-'+env
+        mongoUrl: 'mongodb://localhost:27017/quizRT4'
       });
       accountMicroservice.use('mesh', {auto:true, pin:'role:authentication,cmd:*'});
       accountMicroservice.ready(done);
@@ -25,6 +26,13 @@ decorator.startAllMicroservices = function(cb) {
       jwtMicroservice.use('jwt-microservice',{secret: '48anp.hauec;u,tnh.p9'});
       jwtMicroservice.use('mesh', {auto:true, pin:'role:jwt,cmd:*'});
       jwtMicroservice.ready(done);
+    },
+    startLeaderboardMicroservice: function(done) {
+      leaderboardMicroservice.use('leaderboard-microservice', {
+        mongoUrl: 'mongodb://localhost:27017/quizRT4'
+      });
+      leaderboardMicroservice.use('mesh', {auto:true, pin:'role:leaderboards,cmd:*'});
+      leaderboardMicroservice.ready(done);
     }
   }, cb);
 };
@@ -42,6 +50,10 @@ decorator.stopAllMicroservices = function(cb) {
     stopBaseMicroservice: function(done) {
       baseMicroservice.close(done);
       baseMicroservice = seneca();
+    },
+    stopLeaderboardMicroservice: function(done) {
+      leaderboardMicroservice.close(done);
+      leaderboardMicroservice = seneca();
     }
   }, cb);
 };

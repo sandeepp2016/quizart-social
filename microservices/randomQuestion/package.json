@@ -1,0 +1,19 @@
+{
+  "name": "random-question",
+  "version": "0.1.0",
+  "description": "Generate Random Questions from a topic",
+  "main": "randomQuestionPlugin.js",
+  "scripts": {
+    "start": "node randomQuestionService.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sagar Patke <sagarpatke@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "seneca": "^2.1.0",
+    "seneca-balance-client": "^0.5.0",
+    "seneca-entity": "^1.0.0",
+    "seneca-mesh": "^0.7.0",
+    "seneca-mongo-store": "^0.2.0"
+  }
+}

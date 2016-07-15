@@ -1,0 +1,64 @@
+[
+  {
+    "_id": "57775b673bfa1952e6a825d8",
+    "username": "vigneshwar1@gmail.com",
+    "useravatar": "http://lorempixel.com/100/100",
+    "age":2
+  },
+  {
+    "_id": "57775b67eb94fc60ba5c3fd7",
+    "username": "Sandeep",
+    "useravatar": "http://lorempixel.com/100/100"
+  },
+  {
+    "_id": "57775b673e4bd95d02b1a1e7",
+    "username": "Ram",
+    "useravatar": "http://lorempixel.com/100/100"
+  },
+  {
+    "_id": "57775b67cd5a8808e34373a1",
+    "username": "Deepak",
+    "useravatar": "http://lorempixel.com/100/100"
+  },
+  {
+    "_id": "57775b67f770923c43499653",
+    "username": "Preethi",
+    "useravatar": "http://lorempixel.com/100/100"
+  },
+  {
+    "_id": "57775b674dd70d6baaaf07c5",
+    "username": "SandeepNS",
+    "useravatar": "http://lorempixel.com/100/100"
+  }
+]
+
+
+
+if(retrievedFriends.length > 0){
+  return User.aggregate([
+    { $match:
+      {username:{$in:retrievedFriends.friends}}
+    }
+  ],function(err,friendsData){
+      if(err) {return respond(err); }
+      return respond(null, {response:'success',friends:friendsData})
+  })
+  // b.user.aggregate([{$match:{username:{$in:["vigneshwar1@gmail.com","Sandeep"]}}}])
+}
+
+
+
+//   console.log("inside plugin:",msg.members);
+//   console.log("Inside plugin:",createdGroup._id);
+//   // var groupObj = {subject:createdGroup._id,relation:"Members are",object:msg.members};
+//   return Friend.create({subject:"241192",relation:"Members are",object:msg.members},function(err,createdGroupData){
+//         if(err) {return respond(err); }
+//         return respond(null,{response:'success',group:createdGroupData});
+//   })
+// }
+
+
+
+db.groups.aggregate([{$match:{_id:ObjectId("57793b7072302b5923e96abb")}}])
+
+db.friends.aggregate([{$match:{relation:"Members are",object:"vigneshwar1@gmail.com"}},{$group:{_id:null,groups:{$addToSet:"$subject"}}}])

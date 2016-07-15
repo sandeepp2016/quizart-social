@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"boilerplate-production.friends"},{"v":1,"key":{"subject":1},"name":"subject_1","ns":"boilerplate-production.friends","background":true}]}

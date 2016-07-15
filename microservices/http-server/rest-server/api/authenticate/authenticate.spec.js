@@ -15,7 +15,9 @@ const knownAdmin = {
 }
 
 describe('Setup', function() {
+  this.timeout(10000);
   it('Start All Microservices', function(done) {
+    this.timeout(10000);
     microservicesDecorator.startAllMicroservices(done);
   });
 

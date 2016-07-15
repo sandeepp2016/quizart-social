@@ -1,5 +1,4 @@
-FROM boilerplate/base-image
-
+FROM quizrtsocial/base-image
 WORKDIR /usr/src/service
 
 COPY package.json /usr/src/service

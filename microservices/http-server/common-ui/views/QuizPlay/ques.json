@@ -1,0 +1,67 @@
+[
+  {
+    "id":1,
+    "ques":"What is the Capital of India",
+    "op1":"Delhi",
+    "op2":"Kolkata",
+    "op3":"Bangalore",
+    "op4":"Mumbai",
+    "op5":"Chennai",
+    "op6":"HYd",
+    "answer":"Delhi"
+  },
+  {
+    "id":2,
+    "ques":"Who won the T20 World Cup 2016",
+    "op1":"India",
+    "op2":"Australia",
+    "op3":"West Indies",
+    "op4":"South Africa",
+    "op5":"Pakistan",
+    "op6":"Sri Lanka",
+    "answer":"West Indies"
+  },
+  {
+    "id":3,
+    "ques":"Founder of Wipro",
+    "op1":"Ratan Tata",
+    "op2":"DeeruBhai Ambani",
+    "op3":"Ajim Prem Ji",
+    "op4":"Anil Ambani",
+    "op5":"M.H. Hasham Premji",
+    "op6":"N. R. Narayana Murthy",
+    "answer":"M.H. Hasham Premji"
+  },
+  {
+    "id":4,
+    "ques":"Who is the Current President of India",
+    "op1":"Arvind Kejriwal",
+    "op2":"Pranab Mukharjee",
+    "op3":"Arun Jetly",
+    "op4":"Sheela Dixit",
+    "op5":"Narendra Modi",
+    "op6":"Smriti Irani",
+    "answer":"Pranab Mukharjee"
+  },
+  {
+    "id":5,
+    "ques":"Director of FAN Movie 2016",
+    "op1":"Karan Johar",
+    "op2":"Maneesh Sharma",
+    "op3":"Shimit Amin",
+    "op4":"Yash Chopra",
+    "op5":"Ali Abbas Zafar",
+    "op6":"A.R. Murugadoss",
+    "answer":"Maneesh Sharma"
+  },
+  {
+    "id":6,
+    "ques":"Author Shiva Trilogy",
+    "op1":"Arundhati Roy",
+    "op2":"Amish Tripathi",
+    "op3":" Upamanyu Chatterjee",
+    "op4":"Durjoy Datta",
+    "op5":"Chetan Bhagat",
+    "answer":"Amish Tripathi"
+  }
+]
