@@ -9,6 +9,7 @@ router.use('/leaderboard', require('./api/leaderboard/leaderboard.router'));
 router.use('/profile', require('./api/profile/profile.router'));
 router.use('/friend', require('./api/friend/friend.router'));
 router.use('/topic', require('./api/topic/topic.router'));
+router.use('/analytics', require('./api/analytics/analytics.router'));
 
 
 exports = module.exports = router;

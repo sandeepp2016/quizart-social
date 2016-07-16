@@ -185,6 +185,7 @@ export default class QuizPlay extends React.Component{
           that.setState({serverId:msg});
         })
   }
+
   changeOptionColor(value,color){
     switch(value){
     case this.state.ques.options[0]: this.setState({option0Color:color})
@@ -208,6 +209,27 @@ export default class QuizPlay extends React.Component{
       this.context.socket.emit('myAnswer',socketObj);
       switch(value){
       }
+      var analyticsData={
+        userId:JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub,
+        tournamentId: "1234",
+        questionId:this.state.ques._Id,
+        selectedOptionId:value
+      }
+
+      var request = $.ajax({
+      url: restUrl + '/api/v1/analytics',
+      type: 'POST',
+      data: JSON.stringify(analyticsData),
+      contentType: 'application/json',
+      });
+
+      request.done(function(data) {
+        console.log(JSON.stringify(data));
+      }.bind(this));
+      request.fail(function() {
+          console.log("Error");
+        }.bind(this));
+      //*------------------*
     }
 
   render(){

@@ -18,15 +18,15 @@ exports = module.exports = function(options) {
     });
   });
 
-   const userAnalytics = connection.model('', require('./userAnalytics.schema.js'));
+   const userAnalytics = connection.model('userAnalytic', require('./userAnalytics.schema.js'));
 
    this.add('role:analytics,cmd:create,type:user', function(msg, respond) {
-          console.log("msg.text===="+msg.text+"=====");
+          console.log("msg===="+msg+"=====");
         return  userAnalytics.create(msg,function(err,newpost){
              if(err){
                       return respond(err);
                  }
-              else return respond(null,{response:'success',Id:newpost._id});
+              else return respond(null,{response:'success',entity:newpost});
      });
 
   });

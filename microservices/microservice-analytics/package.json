@@ -4,6 +4,7 @@
   "description": "Managing user analytics data",
   "main": "analytics-plugin.js",
   "scripts": {
+    "start": "node analytics-microservice.js",
     "test": "node_modules/grunt/bin/grunt test"
   },
   "author": "",

@@ -19,11 +19,13 @@ exports = module.exports = function(options) {
   });
 
   const Friend = connection.model('Friend', require('./friend.schema'));
+  const UserProfile = connection.model('UserProfile', require('./profile.schema'));
 
   this.add('role:friend,cmd:addAsFriend', function(msg, respond) {
     console.log("=============Inside plugin addAsFriend msg==== ",msg);
     return Friend.create(msg, function (err, createdFriend) {
       if(err) { return respond(err); }
+      
       return respond(null, {response: 'success', frienddata: createdFriend});
     });
   });
