@@ -18,9 +18,9 @@ exports = module.exports = function(options) {
     });
   });
 
-   const userAnalytics = connection.model('userAnalytic', require('./userAnalytics.schema.js'));
+   const userAnalytics = connection.model('userAnalytics', require('./userAnalytics.schema.js'));
 
-   this.add('role:analytics,cmd:create,type:user', function(msg, respond) {
+   this.add('role:analytics,cmd:create', function(msg, respond) {
           console.log("msg===="+msg+"=====");
         return  userAnalytics.create(msg,function(err,newpost){
              if(err){

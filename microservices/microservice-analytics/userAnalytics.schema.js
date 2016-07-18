@@ -18,4 +18,4 @@
      insertTime: {type:Date}
  });
 
- exports = module.exports = mongoose.model('userAnalytic', userAnalyticsSchema);
+ exports = module.exports = mongoose.model('userAnalytics', userAnalyticsSchema);

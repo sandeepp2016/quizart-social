@@ -13,6 +13,7 @@ import CircularProgress from 'material-ui/CircularProgress';
 import cookie from 'react-cookie';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import base64 from 'base-64';
+import restUrl from '../../restUrl'
 
 const optionStyle = {
   margin:12,
@@ -108,6 +109,8 @@ export default class QuizPlay extends React.Component{
     }
 
   componentDidMount(){
+
+
       var username = JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub;
       console.log('\n\n===========Cookie says username as: '+username+" "+this.context.socket+":socket");
       console.log('context: '+this.context.socket);
@@ -199,6 +202,7 @@ export default class QuizPlay extends React.Component{
   }
   }
     onClick(value,e){
+      this.analyseData(value);
       this.setState({answered:true});
       this.setState({enabled:false});
       var socketObj ={
@@ -209,10 +213,16 @@ export default class QuizPlay extends React.Component{
       this.context.socket.emit('myAnswer',socketObj);
       switch(value){
       }
+
+      //*------------------*
+    }
+    analyseData(value){
+      console.log("=================value OPTION=============",value);
+
       var analyticsData={
         userId:JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub,
         tournamentId: "1234",
-        questionId:this.state.ques._Id,
+        questionId:"12",
         selectedOptionId:value
       }
 
@@ -229,7 +239,6 @@ export default class QuizPlay extends React.Component{
       request.fail(function() {
           console.log("Error");
         }.bind(this));
-      //*------------------*
     }
 
   render(){
