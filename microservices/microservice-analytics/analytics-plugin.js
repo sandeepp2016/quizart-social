@@ -28,7 +28,7 @@ exports = module.exports = function(options) {
                  }
               else return respond(null,{response:'success',entity:newpost});
      });
-
+});
 
 
   this.add('role:analytics,cmd:dangerouslyDeleteAllAnalytics', function(msg, respond) {
