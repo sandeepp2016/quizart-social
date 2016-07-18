@@ -9,7 +9,7 @@
      tournamentId: {type:String},
      topicId: {type:String},
      questionId: {type:String},
-     selectedOptionId : {type:Number},
+     selectedOptionId : {type:String},
      responseType : {type:String},
      responseTime: {type:Number},
      questionNumber : {type:Number},

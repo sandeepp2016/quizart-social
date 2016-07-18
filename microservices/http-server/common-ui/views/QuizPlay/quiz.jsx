@@ -89,7 +89,8 @@ export default class QuizPlay extends React.Component{
       score:[],
       names:[],
       seconds:0,
-      // seconds2:0,
+      seconds2:0,
+      resTime:0,
       progress: 10,
       option0Color: grey100,
       option1Color: grey100,
@@ -128,6 +129,7 @@ export default class QuizPlay extends React.Component{
               clearInterval(timer);
             else
             that.setState({seconds:seconds--});
+            console.log("seconds",that.state.seconds);
            },1000)
           that.setState({ques:data.msg})
           // console.log("===============ques================",data.msg);
@@ -205,8 +207,18 @@ export default class QuizPlay extends React.Component{
   }
   }
     onClick(value,e){
-      this.analyseData(value);
+      var that = this;
 
+      console.log("===================seconds when clicked===============",that.state.seconds);
+      const resSeconds = this.state.seconds;
+      console.log("===============Time==================",resSeconds);
+      // this.setState({seconds2:this.state.seconds});
+      // this.setState({resTime:(10-resSeconds)});
+      var res = (10-resSeconds);
+      // console.log("response time",this.state.resTime);
+      console.log("response time",res);
+      // this.setState({resTime:res});
+      this.analyseData(value,res);
       this.setState({answered:true});
       this.setState({enabled:false});
       var socketObj ={
@@ -220,14 +232,16 @@ export default class QuizPlay extends React.Component{
 
       //*------------------*
     }
-    analyseData(value){
+    analyseData(value,res){
       console.log("=================value OPTION=============",value);
+      console.log("=================response=============",res);
 
       var analyticsData={
         userId:JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub,
         tournamentId: "1234",
         questionId:"12",
-        selectedOptionId:value
+        selectedOptionId:value,
+        responseTime:res
       }
 
       var request = $.ajax({
@@ -245,29 +259,6 @@ export default class QuizPlay extends React.Component{
         }.bind(this));
     }
 
-    UserAnalysis(value){
-      console.log("======================================value=================================",value);
-      var analyticsData = {
-        userId:JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub,
-        tournamentId: "1234",
-        questionId:this.state.ques._Id,
-        selectedOptionId:value
-      }
-
-      // var request = $.ajax({
-      // url: restUrl + '/api/v1/analytics',
-      // type: 'POST',
-      // data: JSON.stringify(analyticsData),
-      // contentType: 'application/json',
-      // });
-      //
-      // request.done(function(data) {
-      //   console.log(JSON.stringify(data));
-      // }.bind(this));
-      // request.fail(function() {
-      //     console.log("Error");
-      //   }.bind(this));
-    }
 
   render(){
     var username = JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub;
