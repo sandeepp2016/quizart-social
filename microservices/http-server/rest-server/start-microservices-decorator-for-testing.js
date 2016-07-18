@@ -8,6 +8,7 @@ var baseMicroservice = seneca();
 var accountMicroservice = seneca();
 var jwtMicroservice = seneca();
 var leaderboardMicroservice = seneca();
+var tournamentMicroservice = seneca();
 
 decorator.startAllMicroservices = function(cb) {
   async.parallel({
@@ -33,6 +34,13 @@ decorator.startAllMicroservices = function(cb) {
       });
       leaderboardMicroservice.use('mesh', {auto:true, pin:'role:leaderboards,cmd:*'});
       leaderboardMicroservice.ready(done);
+    },
+    startTournamentMicroservice: function(done) {
+      tournamentMicroservice.use('tournament-microservice', {
+        mongoUrl: 'mongodb://localhost:27017/quizRT4'
+      });
+      tournamentMicroservice.use('mesh', {auto:true, pin:'role:tournaments,cmd:*'});
+      tournamentMicroservice.ready(done);
     }
   }, cb);
 };
@@ -54,6 +62,10 @@ decorator.stopAllMicroservices = function(cb) {
     stopLeaderboardMicroservice: function(done) {
       leaderboardMicroservice.close(done);
       leaderboardMicroservice = seneca();
+    },
+    stopTournamntMicroservice: function(done) {
+      tournamentMicroservice.close(done);
+      tournamentMicroservice = seneca();
     }
   }, cb);
 };

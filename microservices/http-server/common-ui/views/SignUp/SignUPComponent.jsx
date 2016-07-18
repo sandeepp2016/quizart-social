@@ -63,15 +63,17 @@ export default class SignUPComponent extends React.Component{
               success: (function(data) {
                 console.log("inside signup ajax call");
                 if(data['success'] == false){
+                  this.setState({$invalid :true});
                   router.push('/SignUP');
                   // x.setState({$invalid: true});
+
                 }
                 else{
                   // x.setState({$signedUp:true});
+                  this.setState({$signedUp : true});
                   router.push('/'); // This uses a react router to configure the link provided in router
                 }
               }).bind(this)
-
             });
   }
 

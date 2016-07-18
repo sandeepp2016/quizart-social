@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var mongoose = require('mongoose');
 
 exports = module.exports = function(options) {
@@ -29,5 +30,12 @@ exports = module.exports = function(options) {
               else return respond(null,{response:'success',entity:newpost});
      });
 
+
+
+  this.add('role:analytics,cmd:dangerouslyDeleteAllAnalytics', function(msg, respond) {
+    return userAnalytics.remove({}, function(err) {
+      if(err) { return respond(err); }
+      return respond(null, {response: 'success'});
+    });
   });
 };

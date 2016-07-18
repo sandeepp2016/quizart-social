@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var UserProfileSchema  = new Schema({
   username: { type: String, required: true, unique: true, index: true },
   useravatar :{ type: String},
-  name: {type : String},
+  name : {type: String},
   age :{ type: Number},
   country :{ type: String},
   totalgames :{ type: Number},
@@ -12,7 +12,7 @@ var UserProfileSchema  = new Schema({
   following: {type : Number},
   followers: {type: Number},
   category: {type: String},
-  friends :{type: [String]},
+  friends :{type: [String]}, //add unique 
   ranking : {type: Number, default: 1200}
 });
 

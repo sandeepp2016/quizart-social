@@ -12,7 +12,7 @@ import base64 from 'base-64';
 import restUrl from '../../../restUrl';
 
 
-var username ;
+var username, ids;
 
 const style = {
   paddingTop:40,
@@ -33,16 +33,30 @@ export default class ChatBoxAll extends React.Component {
     username = (JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub);
     this.state = {messages : [],msg: "" , focusmsg:"" ,roomId:"ChatRoom" };
     //console.log(this.props.UserName);
+    console.log("Inside ChatBoxAll, the friend id is==",this.props.friendid);
+    console.log("Inside ChatBoxAll, the group id is==",this.props.groupid);
+    if(this.props.friendid!=null){
+      console.log("inside chatboxa all constructor if loop");
+      ids = [username,this.props.friendid];
+    }
+    else{
+      ids = [this.props.groupid];
+    }
   }
 
   componentDidMount(){
-
-    var ids = [username,this.props.friendid];
+    var outerThis = this ;
+    console.log("Inside component did mount of chatbox all");
     this.props.socket.emit('create_room',ids);
-    // socket.emit('call_socket2',"From socket 2");
+    this.props.socket.on('channelId',function(channelid){
+      outerThis.setState({
+        channelId : channelid
+      },function(){
+        console.log("Inside the chatboxall, channel ild recived from express is==",outerThis.state.channelId);
+      })
+    });
     this.props.socket.on('received_msg',function(msgserver){
       console.log(msgserver);
-      // var newmsg = this.state.messages.concat([{text : msgserver}])  //, id:Date.now(
       this.setState({messages : this.state.messages.concat([{text : msgserver}])});
     }.bind(this));
   }
@@ -53,7 +67,7 @@ export default class ChatBoxAll extends React.Component {
 
   submitForm(e){
     e.preventDefault();
-    this.props.socket.emit('chat_message', this.state.msg);
+    this.props.socket.emit('chat_message',{msg:this.state.msg,user:username,topicid:this.state.channelId});
     console.log("Chat message you sent",this.state.msg);
     this.setState({msg : ''});
   }

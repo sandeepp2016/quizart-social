@@ -142,7 +142,7 @@ export default class Profile extends React.Component{
         addFriend(){
 
               var friendsData = {
-                subject: [this.state.Profile.username,"preeth1@gmail.com"],
+                subject: [this.state.Profile.username,this.props.username],
                 relation: "friends",
                 object: [],
                 };
@@ -156,6 +156,7 @@ export default class Profile extends React.Component{
               });
               request.done(function(data) {
                 console.log(JSON.stringify(data));
+                console.log("Added As Friend");
                 this.setState({
                   disable:true,
                   addFriend: "Friends"
@@ -166,7 +167,6 @@ export default class Profile extends React.Component{
                 }.bind(this));
 
 
-                console.log("Added As Friend");
               }
 
   componentDidMount(){
@@ -174,6 +174,7 @@ export default class Profile extends React.Component{
 
     console.log("uid",this.state.uid);
     console.log("Inside ajax call of did mount in Profile====");
+
     var request = $.ajax({
     url: restUrl + '/api/v1/profile/'+this.state.uid,
     type: 'GET',

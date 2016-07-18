@@ -1,18 +1,19 @@
 exports = module.exports = function(options) {
-  console.log(options);
+  // console.log(options);
 
   var self = this;
 
   self.roomId = options.chatroomId;
   self.socket = options.socket;
+  console.log("inside chatr middleware plugin ,the chatroomId is ======",self.roomId);
 
   const tx = require('seneca')();
   const rx = require('seneca')();
 
   rx.use('redis-transport')
     .add('role:chat,roomId:'+self.roomId+',cmd:send',function(msg,respond){
-      console.log('msg object inside the rx:'+msg);
     console.log('recieved msg chatroom1:'+msg.msg);
+    console.log('received username inside chatroom:',msg.user);
     self.socket.emit('received_msg',msg.msg);
     return respond(null,{response:'success',message:msg.msg});
   })
@@ -28,7 +29,7 @@ exports = module.exports = function(options) {
             return tx.ready(function(err){
             if(err) { return respond(err); }
             console.log("========Inside Middleware No Act on plugin happened=====");
-            return tx.act('role:chat,roomId:'+self.roomId+',cmd:send',{msg:msg.msg},respond);
+            return tx.act('role:chat,roomId:'+self.roomId+',cmd:send',{msg:msg.msg,user:msg.user},respond);
           });
     });
 

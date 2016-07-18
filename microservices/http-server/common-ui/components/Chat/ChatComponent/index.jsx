@@ -20,9 +20,14 @@ export default class ChatComponent extends React.Component{
     console.log("===Inside Chat Component, Initial View : ",this.state.view);
   }
 
- openChatBox(name,GroupData,UserData,groupFlag) {
+ openChatBox(name,FriendId,GroupData,groupFlag) {
    console.log("===Inside Chat Component, Chat Box being opened for: ",name);
-   this.setState({name:name , GroupData: GroupData , UserData : UserData ,groupFlag:groupFlag,view:'ChatBox'});
+   var GroupId = null;
+   if(groupFlag){
+     GroupId = GroupData.topicid;
+   }
+   console.log("====Inside Chat Component, the group id selected is====",GroupId);
+   this.setState({SelectedName:name , SelectedFriendId:FriendId , SelectedGroupData: GroupData , SelectedGroupId:GroupId,groupFlag:groupFlag,view:'ChatBox'});
  }
  closeChatBox(text){
     this.setState({view:'OnlineList'});
@@ -37,7 +42,8 @@ export default class ChatComponent extends React.Component{
         <div>
         {this.state.view=="OnlineList"?<OnlineList closeDrawer={this.closeDrawer.bind(this)} openChatBox={this.openChatBox.bind(this)}/>
         :this.state.view=="ChatBox"?<ChatBox closeChatBox={this.closeChatBox.bind(this)}
-         Name={this.state.name} GroupData={this.state.GroupData} UserData={this.state.UserData} GroupFlag={this.state.groupFlag}/> : null}
+         SelectedName={this.state.SelectedName} SelectedGroupData={this.state.SelectedGroupData} SelectedFriendId={this.state.SelectedFriendId}
+         GroupFlag={this.state.groupFlag} SelectedGroupId={this.state.SelectedGroupId}/>  : null}
         </div>
     )
   }

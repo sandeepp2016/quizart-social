@@ -1,6 +1,5 @@
 var mongoose = require('mongoose')
 
-var bcrypt = require('bcrypt');
 
 exports = module.exports = function(options) {
   const connection = mongoose.createConnection(options.mongoUrl);
@@ -19,36 +18,29 @@ exports = module.exports = function(options) {
     });
   });
 
-  // function hashPassword(password, callback) {
-  //   return bcrypt.hash(password, 10, callback);
-  // }
-  //
-  // function verifyPassword(password, hash, callback) {
-  //   return bcrypt.compare(password, hash, callback);
-  // }
-
   const UserProfile = connection.model('UserProfile', require('./profile.schema'));
 
 
 
   this.add('role:profile,cmd:create', function(msg, respond) {
-    return UserProfile.create(msg, function(err, createdProfile) {
+    return UserProfile.find({username:msg.username},function(err,retrievedProfiles){
       if(err) { return respond(err); }
-      return respond(null, {response: 'success', entity: createdProfile});
+      if(retrievedProfiles.length > 0) { return respond(null, {response: 'fail'}); }
+      return UserProfile.create(msg, function(err, createdProfile) {
+        if(err) { return respond(err); }
+        return respond(null, {response: 'success', entity: createdProfile});
+      })
     });
   });
 
-  // this.add('role:profile,cmd:retrieveById', function(msg, respond) {
-  //   return UserProfile.findById(msg.id, function (err, retrievedProfile) {
-  //     if(err) { return respond(err); }
-  //     return respond(null, {response: 'success', entity: retrievedProfile});
-  //   });
-  // });
 
   this.add('role:profile,cmd:getProfile', function(msg, respond) {
     console.log("=============Inside plugin getProfile list msg==== ",msg);
     return UserProfile.find({username:msg.username}, function (err, retrievedProfile) {
       if(err) { return respond(err); }
+      if(!err){
+        retrievedProfile[0].username
+      }
       return respond(null, {response: 'success', profile: retrievedProfile});
     });
   });

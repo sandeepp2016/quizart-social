@@ -14,7 +14,11 @@ module.exports = function(options){
 
      var self = this;
      var userCount = options.users.length;
+     console.log('Inside game manager plugin');
+     console.log('\n\n'+options.isTournament+' '+options.knockoutId+'\n\n');
      self.gameId = options.gameId;
+     self.knockoutId = options.knockoutId;
+     self.isTournament = options.isTournament;
      var gameStarted = false;
      var leaderboardId = Math.random()*300;
 
@@ -59,7 +63,7 @@ module.exports = function(options){
                // console.log('\n User Response Channel for ' + user + ' ready. '+Date.now()+'\n');
                // console.log('\n======PIN is: role:'+user+',gameId:'+self.gameId+'\n');
 
-               options.callback();
+               options.callback(options.users,options.gameId);
              }
 
            });
@@ -136,12 +140,27 @@ module.exports = function(options){
              };
              for(var i=0;i<arr.length;i++) {
                input.leaderboard.push({
-                 name:arr[i],
+                 userId:arr[i],
                  score:leaderboard[arr[i]]
                });
              }
+
+             input.leaderboard.sort(
+               function(a, b) {
+                   return b.score - a.score;
+               }
+             )
              console.log('\n\ninput: '+JSON.stringify(input)+'\n\n');
              console.log('\n==============Sending final leaderboard as: '+JSON.stringify(leaderboard)+'===================\n');
+             console.log('\n==============options.isTournament==================='+self.isTournament+'\n');
+             if(self.isTournament) {
+               meshConsumerMicroservice.act('role:tournaments,cmd:updateTournamentLeaderboard',{id:self.knockoutId, leaderboard:input.leaderboard}, function(err, response) {
+                 if(err) { console.error('===== ERR: ', err, ' ====='); return res.status(500).send(); }
+                 if(response.response !== 'success') { return res.status(404).send(); }
+                 //return res.status(201).json(response.entity);
+                 console.log('\n==============Updated tournament===================\n');
+               });
+             }
              meshConsumerMicroservice.act('role:leaderboards,cmd:create',input, function(err, response) {
                if(err) { console.error('===== ERR: ', err, ' ====='); return res.status(500).send(); }
                if(response.response !== 'success') { return res.status(404).send(); }

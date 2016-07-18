@@ -60,29 +60,29 @@
       members:["vigneshwar1@gmail.com","sandeep1@gmail.com","deepak1@gmail.com"]
   };
 
-  describe('Create Group', function() {
-    it('Create Group', function(done) {
-      this.timeout(5000);
-      consumerMicroservice.act('role:chat,cmd:creategroup',groupData, function(err, response) {
-        if(err) { return done(err); }
-        response.should.have.property('response');
-        response.response.should.be.exactly('success');
-        // console.log("Retrieved group details Stringified",JSON.stringify(response));
-        console.log("Retrieved group details",(response));
-        // console.log("Retrieved group details",(response.group.topicid));
-        var groupObj = {subject:response.group.topicid,relation:"members are",object:groupData.members};
-        consumerMicroservice.act('role:chat,cmd:createFriends',groupObj,
-        function(err,response){
-          if(err) { return done(err); }
-          response.should.have.property('response');
-          response.response.should.be.exactly('success');
-          console.log("Retrieved group details after updation",response);
-          done();
-        })
-        // done();
-      });
-    });
-  });
+  // describe('Create Group', function() {
+  //   it('Create Group', function(done) {
+  //     this.timeout(5000);
+  //     consumerMicroservice.act('role:chat,cmd:creategroup',groupData, function(err, response) {
+  //       if(err) { return done(err); }
+  //       response.should.have.property('response');
+  //       response.response.should.be.exactly('success');
+  //       // console.log("Retrieved group details Stringified",JSON.stringify(response));
+  //       console.log("Retrieved group details",(response));
+  //       // console.log("Retrieved group details",(response.group.topicid));
+  //       var groupObj = {subject:response.group.topicid,relation:"members are",object:groupData.members};
+  //       consumerMicroservice.act('role:chat,cmd:createFriends',groupObj,
+  //       function(err,response){
+  //         if(err) { return done(err); }
+  //         response.should.have.property('response');
+  //         response.response.should.be.exactly('success');
+  //         console.log("Retrieved group details after updation",response);
+  //         done();
+  //       })
+  //       // done();
+  //     });
+  //   });
+  // });
 
 
   describe('Retrieve Friends', function() {
@@ -129,6 +129,91 @@
     });
   });
 
+
+  var ChatMsg =
+    {
+      topicid : ['2411'],
+      message : 'Welcome Sandeep',
+      sentby: 'Vigneshwar'
+    };
+    describe('Save History', function() {
+      it('Save Chat History', function(done) {
+        this.timeout(5000);
+        consumerMicroservice.act('role:chat,cmd:savehistory', {ChatMsg:ChatMsg}, function(err, response) {
+          if(err) { return done(err); }
+          response.should.have.property('response');
+          response.response.should.be.exactly('success');
+          console.log("Retrieved result after saving history for first time is ",response.result);
+          // console.log("Retrieved Group ids",response.groups[0].groups);
+          // console.log("Retrieved Groups ids",response.groups);
+          done();
+        });
+      });
+    });
+
+
+    var ChatMsg2 =
+      {
+        topicid : ['2411'],
+        message : 'Welcome Preethi',
+        sentby: 'Vigneshwar'
+      };
+      describe('Save History', function() {
+        it('Save Chat History', function(done) {
+          this.timeout(5000);
+          consumerMicroservice.act('role:chat,cmd:savehistory', {ChatMsg:ChatMsg2}, function(err, response) {
+            if(err) { return done(err); }
+            response.should.have.property('response');
+            response.response.should.be.exactly('success');
+            console.log("Retrieved result after saving history for second time is ",response.result);
+            // console.log("Retrieved Group ids",response.groups[0].groups);
+            // console.log("Retrieved Groups ids",response.groups);
+            done();
+          });
+        });
+      });
+
+
+
+      var ChatMsg1 =
+        {
+          topicid : ['2411'],
+          message : 'Welcome Vigneshwar',
+          sentby: 'Sandeep'
+        };
+    describe('Save and Update History', function() {
+      it('Save and Update Chat History', function(done) {
+        this.timeout(5000);
+        consumerMicroservice.act('role:chat,cmd:savehistory', {ChatMsg:ChatMsg1}, function(err, response) {
+          if(err) { return done(err); }
+          response.should.have.property('response');
+          response.response.should.be.exactly('success');
+          console.log("Retrieved result after saving history for third time is ",response.result);
+          // console.log("Retrieved Group ids",response.groups[0].groups);
+          // console.log("Retrieved Groups ids",response.groups);
+          done();
+        });
+      });
+    });
+
+
+
+    describe('Retrieve History', function() {
+      it('Retrieve Chat History', function(done) {
+        this.timeout(5000);
+        consumerMicroservice.act('role:chat,cmd:retrievechathistory', {fileid: 2411}, function(err, response) {
+          if(err) { return done(err); }
+          response.should.have.property('response');
+          response.response.should.be.exactly('success');
+          console.log("Retrieved history from file is ",response.retrievedHistory);
+          // console.log("Retrieved result is ",response.retrievedHistory[0]);
+          // console.log("Retrieved Group ids",response.groups[0].groups);
+          // console.log("Retrieved Groups ids",response.groups);
+          done();
+        });
+      });
+    });
+
   var ids =  ["vigneshwar1@gmail.com","sandeep1@gmail.com"];
   describe('Retrieve Private RoomID', function() {
     it('Retrieve Private RoomID', function(done) {
@@ -148,18 +233,18 @@
     gid: '3457',
     userid: 'sandeep1@gmail.com'
   };
-  describe('Leave Group', function() {
-    it('Leave a Group', function(done) {
-      this.timeout(5000);
-      consumerMicroservice.act('role:chat,cmd:leavegroup',data, function(err, response) {
-        if(err) { return done(err); }
-        response.should.have.property('response');
-        response.response.should.be.exactly('success');
-        console.log("Retrieved Updated Group Data",response.updatedgroup);
-        done();
-      });
-    });
-  });
+  // describe('Leave Group', function() {
+  //   it('Leave a Group', function(done) {
+  //     this.timeout(5000);
+  //     consumerMicroservice.act('role:chat,cmd:leavegroup',data, function(err, response) {
+  //       if(err) { return done(err); }
+  //       response.should.have.property('response');
+  //       response.response.should.be.exactly('success');
+  //       console.log("Retrieved Updated Group Data",response.updatedgroup);
+  //       done();
+  //     });
+  //   });
+  // });
 
 
   describe('Teardown', function() {

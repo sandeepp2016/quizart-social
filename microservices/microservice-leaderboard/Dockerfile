@@ -15,4 +15,4 @@ COPY leaderboard-microservice.js /usr/src/leaderboard
 COPY leaderboard-plugin.js /usr/src/leaderboard
 COPY leaderboard.schema.js /usr/src/leaderboard
 
-CMD ["npm", "start"]
+CMD ["npm", "start", "--production"]

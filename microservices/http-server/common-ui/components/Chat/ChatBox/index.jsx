@@ -16,7 +16,7 @@ import FlatButton from 'material-ui/FlatButton';
 import ChangeGroupName from '../ChangeGroupName';
 import base64 from 'base-64';
 import restUrl from '../../../restUrl';
-// 
+//
 // var username = (JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub);
 // username = username.split("@")[0];
 
@@ -26,42 +26,47 @@ export default class ChatBox extends React.Component{
 
   constructor(props){
     super(props);
-    console.log("========Inside Chatbox in its constructor=======");
+    // console.log("========Inside Chatbox in its constructor=======");
     var socket1 = io.connect(restUrl+'/chat');
     this.state={
       view:'chatbox',popoverOpen : false, GroupData:[], dialogOpen: false,groupFlag: this.props.GroupFlag,
-      socket:socket1
+      socket:socket1 , FriendId: this.props.SelectedFriendId , GroupId :this.props.SelectedGroupId
     }
   }
 
   componentDidMount(){
-  console.log("====inisde did mount of chat box, the flag is ",this.props.GroupFlag);
+  // console.log("====inisde did mount of chat box, the flag is ",this.props.GroupFlag);
     // this.setState({socket:socket1});
     var outerThis = this;
     if(this.props.GroupFlag){
       this.setState({
-        GroupData : this.props.GroupData,
-        UserData : this.props.UserData,
-        UserArray : this.props.GroupData.users,
-        titleName : this.props.Name,
+        GroupData : this.props.SelectedGroupData,
+        FriendId : null,
+        // UserArray : this.props.SelectedGroupData.users,
+        titleName : this.props.SelectedName,
       })
     }
     else{
       this.setState({
         GroupData : null,
-        UserData : this.props.UserData,
         UserArray : null,
-        titleName : this.props.Name,
+        FriendId : this.props.FriendId,
+        titleName : this.props.SelectedName,
       })
     }
 
-    this.props.UserData.map(function(data){
-      if(outerThis.props.Name==data.name){
-        this.setState({
-          friendid: data.username
-        })
-      }
-    })
+    // console.log("Inside ChatBox,user data is====",this.props.UserData);
+    // console.log("Inside ChatBox,user name is====",this.props.Name);
+    // this.props.UserData.map(function(data){
+    //   console.log("Before if loop of chatbox, the props name is,",outerThis.props.Name);
+    //   if(data.name===outerThis.props.Name){
+    //     console.log("Inside if loop of chatbox, the props name is,",outerThis.props.Name);
+    //     console.log("Inside if loop of chatbox, the userdata name is,",data.name);
+    //     outerThis.setState({
+    //       friendid: data.username
+    //     })
+    //   }
+    // })
 
   };
 
@@ -80,7 +85,7 @@ export default class ChatBox extends React.Component{
   }
 
   viewGroupInfo(){
-    console.log("Inside viewGroupInfo");
+    // console.log("Inside viewGroupInfo");
     this.setState({
       view:'groupinfo',popoverOpen: false,
     })
@@ -127,14 +132,14 @@ export default class ChatBox extends React.Component{
   }
 
   closeChangeGroup(text){
-    console.log("inside close change group");
+    // console.log("inside close change group");
     this.setState({
       view: 'chatbox',
     })
   }
 
   closeChatBox(){
-    console.log("=====Inside Chat Box , closing the socket connection====");
+    // console.log("=====Inside Chat Box , closing the socket connection====");
     // socket1.close();
     this.state.socket.disconnect();
     // socket1.disconnect();
@@ -157,7 +162,7 @@ export default class ChatBox extends React.Component{
       />,
     ];
     var outerThis=this;
-    console.log("=====Insisde chatbox check flag ,state of groupflag",this.state.groupFlag);
+    // console.log("=====Insisde chatbox check flag ,state of groupflag",this.state.groupFlag);log
 
     return(
       <div>
@@ -184,7 +189,7 @@ export default class ChatBox extends React.Component{
                     <Avatar src='http://lorempixel.com/100/100' size={30} style={style} />
                   </div>
                   <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <h3 style={{textAlign:'center'}}>{this.props.Name}</h3>
+                    <h3 style={{textAlign:'center'}}>{this.props.SelectedName}</h3>
                   </div>
                 </div>
               </div>
@@ -219,7 +224,7 @@ export default class ChatBox extends React.Component{
         <Divider />
         <div >
           {this.state.view==="chatbox" ?
-              <ChatBoxAll friendid={this.state.friendid} socket={this.state.socket}/> :
+              <ChatBoxAll friendid={this.state.FriendId} groupid = {this.state.GroupId} socket={this.state.socket}/> :
               this.state.view==="groupinfo" ? <GroupInfo GroupData={this.state.GroupData}/> : null
           }
 

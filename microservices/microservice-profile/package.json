@@ -22,7 +22,6 @@
     "should": "^9.0.2"
   },
   "dependencies": {
-    "bcrypt": "^0.8.7",
     "mongoose": "^4.4.20",
     "seneca": "^2.1.0",
     "seneca-balance-client": "^0.5.0",

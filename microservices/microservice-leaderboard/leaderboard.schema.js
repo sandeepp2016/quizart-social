@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var LeaderboardSchema = new Schema({
   leaderboard: [{
-      name: { type: String, required: true },
+      userId: { type: String, required: true },
       score: { type: Number, required: true }
   }]
 });

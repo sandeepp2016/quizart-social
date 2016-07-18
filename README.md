@@ -36,7 +36,7 @@ __NOTE:__ Remember to run the eval command everytime you open a new terminal.
 ### Step 3: Create base image
 ```sh
 $ cd $PROJECT_HOME/base-image
-$ docker build -t boilerplate/base-image .
+$ docker build -t quizrtsocial/base-image .
 ```
 ### Step 4: Deploy rest of the project
 ```sh

@@ -24,7 +24,15 @@ var QuizWar=React.createClass({
 
   handleQuizwarTouch : function(){
     event.preventDefault();
-    this.context.router.push('/quiz');
+    var condition = false;
+    var id = 'dummyId';
+    var data = {isTournament:true, id:'dummy'};
+    this.context.router.push('/quiz/false/dummy');
+    /* this.context.router.push({
+      pathname: '/quiz',
+      query: data,
+      state: data
+    }); */
   },
 
   render:function (){

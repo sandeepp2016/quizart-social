@@ -17,12 +17,27 @@ exports = module.exports = function(options) {
 
 
   this.add('role:jwt,cmd:generateGoogleToken', function(msg, respond) {
-      // var token = jwt.sign(msg.data.user,msg.data.secret);
       console.log("Inside generateGoogleToken the msg is,==========",msg);
       console.log("Inside generateGoogleToken the msg is,==========",msg.data.user);
       return jwt.sign({}, secret, { subject: msg.data.user }, function(err, token) {
-        if(err) { return respond(err); }
-        return respond(null, {token, response: 'success'});
+        // if(err) { return respond(err); }
+        // var userObj = {
+        //   username: msg.data.user,
+        //   useravatar :msg.data.useravatar,
+        //   name : msg.data.name,
+        //   age : null,
+        //   country : 'NA',
+        //   totalGames : 0,
+        //   liketopics: '',
+        //   following: 0,
+        //   followers: 0,
+        //   category: 'Beginner'
+        // };
+        // this.act('role:profile,cmd:create',userObj,function(err,response){
+        //     if(err) { return respond(err); }
+        //     return respond(null, {token, response: 'success'});
+        // });
+            return respond(null, {token, response: 'success'});
       });
 
   });

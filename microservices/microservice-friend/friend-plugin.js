@@ -23,10 +23,14 @@ exports = module.exports = function(options) {
 
   this.add('role:friend,cmd:addAsFriend', function(msg, respond) {
     console.log("=============Inside plugin addAsFriend msg==== ",msg);
+    console.log("=============Inside plugin addAsFriend msg username of the person adding the friend==== ",msg.subject[0]);
     return Friend.create(msg, function (err, createdFriend) {
       if(err) { return respond(err); }
-      
-      return respond(null, {response: 'success', frienddata: createdFriend});
+      return UserProfile.update({username: msg.subject[0]},{$addToSet:{friends:msg.subject[1]}},function(err,updatedProfile){
+          if(err) { console.error("Error"); }
+          return respond(null, {response: 'success', frienddata: createdFriend});
+    });
+      // return respond(null, {response: 'success', frienddata: createdFriend});
     });
   });
 

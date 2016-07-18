@@ -77,15 +77,23 @@ export default class OnlineList extends React.Component{
       console.log("===Inside Onlinelist ,selected "+name+"to open chat box");
       var temp;
       var groupflag = false;
+      var friendid;
       var outerThis=this;
       this.state.GroupData.map(function(g){
         if(g.groupname===name){
+          console.log("inside online list, inside the group name loop");
             temp = g;
             groupflag = true;
         }
-        // outerThis.props.openChatBox(name,temp,outerThis.state.OnlineUsers,groupflag);
+        else{
+          console.log("inside online list, inside the friend name loop");
+          outerThis.state.OnlineUsers.map(function(u){
+            if(u.name===name){friendid=u.username;}
+          });
+        }
       });
-      outerThis.props.openChatBox(name,temp,outerThis.state.OnlineUsers,groupflag);
+      console.log("Inside Online list,data sent to open chat box===",name,friendid,temp,groupflag);
+      outerThis.props.openChatBox(name,friendid,temp,groupflag);
     }
 
     popoverOpen(event) {
