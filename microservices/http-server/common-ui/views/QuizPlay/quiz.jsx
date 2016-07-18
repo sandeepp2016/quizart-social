@@ -111,10 +111,6 @@ export default class QuizPlay extends React.Component{
     }
 
   componentDidMount(){
-<<<<<<< HEAD
-
-
-=======
     console.log('QuizPlay props: ' + JSON.stringify(this.props));
       var username = JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub;
       console.log('\n\n===========Cookie says username as: '+username+" "+this.context.socket+":socket");

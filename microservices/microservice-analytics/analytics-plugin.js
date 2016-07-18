@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var mongoose = require('mongoose');
 
 exports = module.exports = function(options) {

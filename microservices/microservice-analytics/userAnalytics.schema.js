@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-/**
- * Created by GH316885 on 3/17/2016.
- */
+
  var mongoose = require('mongoose');
 
  var Schema = mongoose.Schema;
