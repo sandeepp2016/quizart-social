@@ -36,7 +36,7 @@ export default class OnlineList extends React.Component{
 
     componentDidMount(){
 
-      console.log("==========Inside did mount of OnlineList before first ajax=====username is ",username);
+      // console.log("==========Inside did mount of OnlineList before first ajax=====username is ",username);
 
       $.ajax({
         url: restUrl + '/api/v1/friendslist/'+username,
@@ -44,29 +44,31 @@ export default class OnlineList extends React.Component{
         contentType: 'application/json',
         cache: false,
         success : function(data){
-          console.log("=====inside success of first ajax in OnlineList");
-          console.log("====Inside Onlinelist, retrived friends List: ",data.data);
+          // console.log("=====inside success of first ajax in OnlineList");
+          // console.log("====Inside Onlinelist, retrived friends List: ",data.data);
           // console.log("====Inside client ",data.data[0]);
           this.setState({OnlineUsers: data.data});
           this.loadgrouplistfromserver();
         }.bind(this)
       });
 
-      console.log("==========Inside did mount of OnlineList after first ajax=====");
+      // console.log("==========Inside did mount of OnlineList after first ajax=====");
   }
 
     loadgrouplistfromserver(){
-      console.log("===Inside Online List,inside Load GroupListFromServer===");
+      // console.log("===Inside Online List,inside Load GroupListFromServer===");
       $.ajax({
         url: restUrl + '/api/v1/groupslist/'+username,
         type: 'GET',
         contentType: 'application/json',
         cache: false,
         success : function(data){
-          console.log("=====inside success of groups");
-          console.log("====Inside client groups ",data.data);
-          console.log("====Inside client groups",data.data[0]);
-          this.setState({GroupData: data.data});
+          // console.log("=====inside success of groups");
+          // console.log("====Inside client groups ",data.data);
+          // console.log("====Inside client groups",data.data[0]);
+          if(data.data){
+            this.setState({GroupData: data.data});
+          }
         }.bind(this)
       });
 
@@ -74,27 +76,53 @@ export default class OnlineList extends React.Component{
 
 
     handleTouchTap(name) {
-      console.log("===Inside Onlinelist ,selected "+name+"to open chat box");
+      // console.log("===Inside Onlinelist ,selected "+name+"to open chat box");
       var temp;
       var groupflag = false;
       var friendid;
       var outerThis=this;
       this.state.GroupData.map(function(g){
         if(g.groupname===name){
-          console.log("inside online list, inside the group name loop");
+          // console.log("inside online list, inside the group name loop");
             temp = g;
             groupflag = true;
         }
-        else{
-          console.log("inside online list, inside the friend name loop");
-          outerThis.state.OnlineUsers.map(function(u){
-            if(u.name===name){friendid=u.username;}
-          });
+      });
+      this.state.OnlineUsers.map(function(u){
+        // console.log("User data inside map",u);
+        if(u.name===name){
+          // console.log("inside if loop of online users");
+          friendid=u.username;
         }
       });
       console.log("Inside Online list,data sent to open chat box===",name,friendid,temp,groupflag);
       outerThis.props.openChatBox(name,friendid,temp,groupflag);
     }
+
+
+    // handleTouchTap(name) {
+    //   console.log("===Inside Onlinelist ,selected "+name+" to open chat box");
+    //   var temp;
+    //   var groupflag = false;
+    //   var friendid;
+    //   var outerThis=this;
+    //
+    //   this.state.GroupData.map(function(g){
+    //     if(g.groupname===name){
+    //       console.log("inside online list, inside the group name loop");
+    //         temp = g;
+    //         groupflag = true;
+    //     }
+    //     else{
+    //       console.log("inside online list, inside the friend name loop");
+    //       outerThis.state.OnlineUsers.map(function(u){
+    //         if(u.name===name){friendid=u.username;}
+    //       });
+    //     }
+    //   });
+    //   console.log("Inside Online list,data sent to open chat box===",name,friendid,temp,groupflag);
+    //   outerThis.props.openChatBox(name,friendid,temp,groupflag);
+    // }
 
     popoverOpen(event) {
       event.preventDefault();
@@ -117,15 +145,47 @@ export default class OnlineList extends React.Component{
     };
 
     postGroupName(groupInfo){
-      var groupDataPost ={
-          groupname:groupInfo.groupname,
-          groupavatar:"http://lorempixel.com/100/100",
-          topicid:Math.ceil(Math.random()*1231),
-          members:groupInfo.users
+      var d = new Date().getTime();
+      var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = (d + Math.random()*16)%16 | 0;
+          d = Math.floor(d/16);
+          return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+      });
+      var requestMsg ={
+        message : {content: uuid, command : 'generateUUID'},
+        details : {groupname :groupInfo.groupname}
       };
+      console.log("Request Message is ",requestMsg);
 
-      console.log("Inside Post group and data to be posted====",groupDataPost);
+      var topicid ;
+      $.ajax({
+          url: restUrl + '/api/generateuuid/uuid',
+          contentType : 'application/json',
+          type : 'POST',
+          data : JSON.stringify(requestMsg),
+          success : function(data){
+              console.log("Response for the ajax req to generateuuid is",data.response);
+              topicid = data.result.content;
+              console.log("The Topic id retrived is ",topicid);
+              var groupDataPost ={
+                  groupname:groupInfo.groupname,
+                  groupavatar:"http://lorempixel.com/100/100",
+                  topicid:topicid,
+                  members:groupInfo.users
+              };
+              console.log("inside success of ajax after retrieving the UUID, the groupdata to be posted is ",groupDataPost);
+              this.postGroupNameDB({"groupInfo":groupDataPost})
+          }.bind(this),
+          error : function(xhr,status,err){
+              console.log("Error in making the request to generateuuid");
+          }.bind(this)
+      });
+    }
 
+    postGroupNameDB(groupInfo){
+      console.log("inside post group to DB the received data is ",groupInfo);
+      var groupDataPost = groupInfo.groupInfo;
+      console.log("inside post group to DB the data to be posted is ",groupDataPost);
       $.ajax({
         url: restUrl + '/api/v1/groupslist/addgroup',
         contentType: 'application/json',
@@ -137,13 +197,12 @@ export default class OnlineList extends React.Component{
           this.setState({GroupData: this.state.GroupData.concat(data.groupdata)});
         }.bind(this),
         error: function(xhr, status, err) {
-          console.log("Inside Online list Post groupo method, Faill response from server");
+          console.log("Something Went wrong");
         }.bind(this)
       });
     }
 
     addGroup(groupname,groupusers){
-
       this.postGroupName({"groupname":groupname , "users":groupusers});
       this.setState({
         groupName : '',view: "List",
@@ -201,8 +260,6 @@ export default class OnlineList extends React.Component{
                       <Menu>
                         <MenuItem primaryText="New Group" leftIcon={<FontIcon className="muidocs-icon-social-group_add" />}
                         onTouchTap={this.createGroup.bind(this)}/>
-                        <MenuItem primaryText="Settings" leftIcon={<FontIcon className="muidocs-icon-action-settings"/>}/>
-                        <MenuItem primaryText="Sign out" leftIcon={<FontIcon className="muidocs-icon-action-power_settings_new"/>}/>
                       </Menu>
                       </Popover>
                     </div>

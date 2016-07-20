@@ -7,6 +7,8 @@ import MediaQuery from 'react-responsive';
 import ChatDrawer from '../../components/Chat/ChatDrawer';
 import SubTopicContainer from '../../components/SubTopics/SubTopicContainer';
 import restUrl from '../../restUrl';
+import TabsMobile from '../../components/Tabs';
+
 
 var baseurl='/';
 
@@ -93,7 +95,7 @@ export default class Topics extends React.Component {
                 <MainAppBar/>
                 <MediaQuery query='(max-device-width: 800px)'>
                   <MediaQuery query='(max-width: 800px)'>
-
+                    <TabsMobile page="Topics"/>
                   </MediaQuery>
                 </MediaQuery>
 

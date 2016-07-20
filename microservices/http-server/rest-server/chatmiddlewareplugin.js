@@ -1,44 +1,68 @@
-exports = module.exports = function(options) {
-  // console.log(options);
+exports = module.exports = function(socket) {
 
+  var context = require('./context');
+  var mesh = context.mesh;
   var self = this;
 
-  self.roomId = options.chatroomId;
-  self.socket = options.socket;
-  console.log("inside chatr middleware plugin ,the chatroomId is ======",self.roomId);
+  var subscriber = require('redis').createClient(6379, '172.23.238.253');
+  var publisher = require('redis').createClient(6379, '172.23.238.253');
 
-  const tx = require('seneca')();
-  const rx = require('seneca')();
+  self.socket = socket;
 
-  rx.use('redis-transport')
-    .add('role:chat,roomId:'+self.roomId+',cmd:send',function(msg,respond){
-    console.log('recieved msg chatroom1:'+msg.msg);
-    console.log('received username inside chatroom:',msg.user);
-    self.socket.emit('received_msg',msg.msg);
-    return respond(null,{response:'success',message:msg.msg});
-  })
+    socket.on('create_room', function(userids){
+      console.log("Inside the Middleware, the user ids got to act on the plugin======== ",userids);
+      var channelId = false;
+           if(userids.length>1){
+             mesh.act('role:chat,cmd:joinprivateroom',{ids:userids}, function(err, response){
+                 if(err) { console.error('===== ERR: ', err, ' =====');  }
+                 console.log("Inside App.js getting room ID===",response.roomId[0].object);
+                 channelId = response.roomId[0].object ;
+                 subscriber.subscribe(channelId);
 
-    .listen({type:'redis',pin:'role:chat,roomId:'+self.roomId+',cmd:*'})
-    .ready(function(){
-      console.log('=====Setup TX=====');
-      tx.use('redis-transport');
-      tx.client({type:'redis',pin:'role:chat,roomId:'+self.roomId+',cmd:*'});
-  });
+                 socket.emit('channelId',channelId);
+             });
+           }
+           else{
+             console.log("The ids recieved for group inside Middleware is",userids);
+             console.log("The ids recieved for group inside Middleware is",userids[0]);
+             channelId = userids;
+             subscriber.subscribe(channelId);
+             socket.emit('channelId',channelId);
+           }
+           subscriber.on('message',function(channel,message){
+               console.log("Subscribed to the Channel:",channel);
+               var message1 = JSON.parse(message);
+               console.log("message received and the command is ",message1.command);
+               if(message1.command === "sendMessage"){
+                 console.log("Inside loop to send socket emit");
+                  socket.emit('received_msg',message1);
+               }
+               else if(message1.command === "retrieveHistory"){
+                 console.log("inside retrieved History is ",message1);
+                 socket.emit('retrievedHistory',message1);
+               }
+           });
+        });
 
-  this.add('role:chat,cmd:sendMsg', function(msg, respond) {
-            return tx.ready(function(err){
-            if(err) { return respond(err); }
-            console.log("========Inside Middleware No Act on plugin happened=====");
-            return tx.act('role:chat,roomId:'+self.roomId+',cmd:send',{msg:msg.msg,user:msg.user},respond);
-          });
-    });
+      socket.on('retrieveHistory' , function(channelid){
+        console.log("Inside Middleware, to retrieve history, the channel id sent is:",channelid[0]);
+        var message =
+          {
+            content : channelid[0],
+            command: 'retrieveHistory'
+          };
+        publisher.publish('uuidgenerator2',JSON.stringify({message:message}));
+      });
 
-  this.add('role:chat,cmd:unsubscribe',function(msg,respond){
-      console.log("=====Inside Plugin to, msg is to unsubscribe the channel====",msg.msg);
-      rx.close();
-      tx.close();
-          return respond(null,{response:'success',message:'unsubscibed'})
-
-  });
-
-  }
+      socket.on('chat_message', function(msg){
+          console.log("Inside Middleware message from client via socket====",msg);
+          var message =
+            {
+              content : msg.topicid[0],
+              text : msg.msg,
+              command: 'sendMessage',
+              sentBy: msg.user
+            };
+            publisher.publish('uuidgenerator2',JSON.stringify({message:message}));
+      });
+  };

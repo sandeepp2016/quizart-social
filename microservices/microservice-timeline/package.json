@@ -1,0 +1,28 @@
+{
+  "name": "timeline-microservice",
+  "version": "0.1.0",
+  "description": "timeline",
+  "main": "timeline-plugin.js",
+  "scripts": {
+    "start": "node timeline-microservice.js",
+    "test": "node_modules/grunt/bin/grunt test"
+  },
+  "keywords": [
+    "timeline",
+    "post",
+    "mongodb"
+  ],
+  "author": "Sandeep Patel <sandeeppatelsgsits@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^2.5.3",
+    "should": "^9.0.2"
+  },
+  "dependencies": {
+    "mongoose": "^4.4.20",
+    "seneca": "^2.1.0",
+    "seneca-balance-client": "^0.5.0",
+    "seneca-mesh": "^0.7.0",
+   "seneca-redis-transport": "^0.3.0"
+  }
+}

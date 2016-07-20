@@ -27,6 +27,7 @@ export default class ChatComponent extends React.Component{
      GroupId = GroupData.topicid;
    }
    console.log("====Inside Chat Component, the group id selected is====",GroupId);
+   console.log("====Inside Chat Component, the friend id selected is====",FriendId);
    this.setState({SelectedName:name , SelectedFriendId:FriendId , SelectedGroupData: GroupData , SelectedGroupId:GroupId,groupFlag:groupFlag,view:'ChatBox'});
  }
  closeChatBox(text){

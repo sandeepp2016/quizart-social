@@ -4,6 +4,7 @@ import ChatDrawer from '../../components/Chat/ChatDrawer';
 import React from 'react';
 import TournamentsSubContainer from '../../components/SubTournaments/TournamentsSubContainer';
 import restUrl from '../../restUrl';
+import TabsMobile from '../../components/Tabs';
 
 var baseurl='/';
 
@@ -49,7 +50,7 @@ export default class Topics extends React.Component {
               <MainAppBar/>
               <MediaQuery query='(max-device-width: 800px)'>
                 <MediaQuery query='(max-width: 800px)'>
-
+                  <TabsMobile page="Tournament" tournament ={this.state.tournamentData}/>
                 </MediaQuery>
               </MediaQuery>
 

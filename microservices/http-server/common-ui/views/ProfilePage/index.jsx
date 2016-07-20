@@ -4,7 +4,7 @@ import MediaQuery from 'react-responsive';
 import MainAppBar from '../../components/MainAppBar';
 import ChatDrawer from '../../components/Chat/ChatDrawer';
 import TabsMobile from '../../components/Tabs';
-
+import Timeline from '../../components/Timeline';
 export default class HomePage extends React.Component {
   constructor() {
     super();
@@ -27,7 +27,7 @@ export default class HomePage extends React.Component {
                 <MainAppBar/>
                 <MediaQuery query='(max-device-width: 800px)'>
                   <MediaQuery query='(max-width: 800px)'>
-                    <TabsMobile page="Profile"/>
+                    <TabsMobile page="Profile" username={this.props.params.username}/>
                   </MediaQuery>
                 </MediaQuery>
 
@@ -43,7 +43,7 @@ export default class HomePage extends React.Component {
                                       <Profile username={this.props.params.username}/>
                                   </div>
                                   <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
-
+                                    <Timeline user ="user" hashtag ="QuizRTSocial"/>
                                   </div>
                                   <div className="col-xs-1 col-sm-1 col-md-1 col-lg-1"  style={{paddingTop:20}}>
                                     <ChatDrawer/>

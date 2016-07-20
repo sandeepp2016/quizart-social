@@ -119,7 +119,6 @@ const style_players={
 
     componentDidMount(){
 
-      console.log("Topic Id in profile component:",this.props.id);
 
 
       var request = $.ajax({

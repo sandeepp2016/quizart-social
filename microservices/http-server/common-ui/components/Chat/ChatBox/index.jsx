@@ -16,9 +16,8 @@ import FlatButton from 'material-ui/FlatButton';
 import ChangeGroupName from '../ChangeGroupName';
 import base64 from 'base-64';
 import restUrl from '../../../restUrl';
-//
-// var username = (JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub);
-// username = username.split("@")[0];
+
+var username;
 
 const style = {margin : 5};
 
@@ -26,7 +25,7 @@ export default class ChatBox extends React.Component{
 
   constructor(props){
     super(props);
-    // console.log("========Inside Chatbox in its constructor=======");
+    username = (JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub);
     var socket1 = io.connect(restUrl+'/chat');
     this.state={
       view:'chatbox',popoverOpen : false, GroupData:[], dialogOpen: false,groupFlag: this.props.GroupFlag,
@@ -54,19 +53,6 @@ export default class ChatBox extends React.Component{
         titleName : this.props.SelectedName,
       })
     }
-
-    // console.log("Inside ChatBox,user data is====",this.props.UserData);
-    // console.log("Inside ChatBox,user name is====",this.props.Name);
-    // this.props.UserData.map(function(data){
-    //   console.log("Before if loop of chatbox, the props name is,",outerThis.props.Name);
-    //   if(data.name===outerThis.props.Name){
-    //     console.log("Inside if loop of chatbox, the props name is,",outerThis.props.Name);
-    //     console.log("Inside if loop of chatbox, the userdata name is,",data.name);
-    //     outerThis.setState({
-    //       friendid: data.username
-    //     })
-    //   }
-    // })
 
   };
 
@@ -104,7 +90,23 @@ export default class ChatBox extends React.Component{
   }
 
   confirmLeave(){
-    // console.log(typeof(this.state.GroupData));
+    console.log("Inside Leave Group");
+    console.log("The group id to be leaved is",this.props.SelectedGroupId);
+    var leavegroupdata = {
+      gid : this.props.SelectedGroupId,
+      userid: username
+    };
+    console.log("Leave group data sent to express is",leavegroupdata);
+    $.ajax({
+      url: restUrl + '/api/v1/leavegroup/',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(leavegroupdata),
+      success : function(data){
+        console.log("=====inside success of leave group");
+        this.setState({dialogOpen: false});
+      }.bind(this)
+    });
     // var url = "http://localhost:8080/groups/"+this.state.GroupData.id;
     // this.state.UserArray.splice(this.state.UserArray.indexOf(user),1);
     // this.setState({
@@ -225,6 +227,7 @@ export default class ChatBox extends React.Component{
         <div >
           {this.state.view==="chatbox" ?
               <ChatBoxAll friendid={this.state.FriendId} groupid = {this.state.GroupId} socket={this.state.socket}/> :
+              this.state.view ==="changename" ?<ChangeGroupName GroupData={this.state.GroupData} close={this.closeChangeGroup.bind(this)}/>:
               this.state.view==="groupinfo" ? <GroupInfo GroupData={this.state.GroupData}/> : null
           }
 

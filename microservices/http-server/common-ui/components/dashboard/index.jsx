@@ -13,9 +13,11 @@ var baseUrl = '/';
 var Dashboard = React.createClass({
   getInitialState:function(){
       return{incre:false, topics:[]}
-  },
+  }
 
-  componentDidMount:function(){
+
+  ,componentDidMount:function(){
+  //this.createTwitterAuthToken.bind(this);
     console.log('-----------------------------------------00000compont did mount');
     // $.ajax({
     //   url: baseUrl+'topics/myfav',
@@ -31,7 +33,26 @@ var Dashboard = React.createClass({
     //     console.log('error aaya');
     //   }
     // })
-  },
+    if(!localStorage.authToken) {
+    var request =  $.ajax({
+       url: "api/v1/timeline/twitter/createAuthToken",
+       contentType: 'application/json',
+       cache: false,
+       headers: {JWT: localStorage.token}
+
+     });
+
+     request.done(function(data) {
+
+                  console.log("=======retrieved authToken=======",data.authToken);
+                  localStorage.authToken =data.authToken;
+       }.bind(this));
+
+         request.fail(function(xhr, status, err) {
+         console.error("api/v1/timeline/twitter/createAuthToken", status, err.toString());
+       }.bind(this));
+   }
+},
 
   handleCheck:function(_id,topic){
     var username = Cookie.load("username");

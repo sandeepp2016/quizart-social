@@ -14,5 +14,6 @@ RUN npm install --production
 COPY gameManagerPlugin.js /usr/src/gameplay
 COPY gameplayProvisionerPlugin.js /usr/src/gameplay
 COPY gameplayProvisionerMicroservice.js /usr/src/gameplay
+COPY userAnalytics.schema.js /usr/src/service
 
 CMD ["npm", "start"]

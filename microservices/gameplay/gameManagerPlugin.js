@@ -134,6 +134,9 @@ module.exports = function(options){
              // var loadedLeaderboard = leaderboard.list$({},function(err,response){
              //   console.log('\n========Loaded the leaderboard, sending it to users=====\n')
              // })
+             saveData(newRec,done){
+
+             }
              var arr = Object.keys(leaderboard);
              var input = {
                leaderboard: []

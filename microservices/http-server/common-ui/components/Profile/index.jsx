@@ -11,6 +11,7 @@ import IconMenu from 'material-ui/IconMenu';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import {Link} from 'react-router';
 
 import restUrl from '../../restUrl'
 
@@ -57,6 +58,7 @@ export default class Profile extends React.Component{
       open: false,
       arr:[],
       uid:this.props.username,
+      uuid:"",
       Profile: {
         username: JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub,
       },
@@ -73,14 +75,6 @@ export default class Profile extends React.Component{
     }
   }
 
-  // handleUserName(event) {
-  //   if(event.target.value != this.state.Profile.username){
-  //   return{
-  //     username: 'UserName cannot be changed'
-  //   }
-  // }
-  // this.setState({username: event.target.value});
-  // };
 
   handleName(event) {
     this.setState({name: event.target.value});
@@ -124,7 +118,6 @@ export default class Profile extends React.Component{
         });
 
         request.done(function(data) {
-          // console.log(JSON.stringify(data));
           this.setState({openSuccess: true});
         }.bind(this));
         request.fail(function() {
@@ -139,41 +132,76 @@ export default class Profile extends React.Component{
 
         }
 
+
         addFriend(){
 
+           this.getUuid();
+
+         }
+
+        getUuid(){
+
+          var d = new Date().getTime();
+          var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+              var r = (d + Math.random()*16)%16 | 0;
+              d = Math.floor(d/16);
+              return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+          });
+          var requestMsg ={
+            message : {content: uuid, command : 'generateUUID'},
+            details : {subject :[this.state.Profile.username,this.props.username]}
+          };
+          console.log("Request Message is ",requestMsg);
+
+          var topicid ;
+
+            var request = $.ajax({
+            url: restUrl + '/api/generateuuid/uuid',
+            type : 'POST',
+            data : JSON.stringify(requestMsg),
+            contentType: 'application/json',
+            });
+            request.done(function(data) {
+              topicid = data.result.message.content;
               var friendsData = {
                 subject: [this.state.Profile.username,this.props.username],
                 relation: "friends",
-                object: [],
+                object: [this.state.topicid],
                 };
+                this.add({"friendsInfo":friendsData});
 
-              var request = $.ajax({
-                url: restUrl + '/api/v1/friend',
-                type: 'POST',
-                data: JSON.stringify(friendsData),
-                contentType: 'application/json',
+            }.bind(this));
+            request.fail(function() {
+            console.error('err');
+            }.bind(this));
 
+          }
+
+        add(friendsInfo){
+
+          friendsData = friendsInfo.friendsInfo;
+
+            var request = $.ajax({
+              url: restUrl + '/api/v1/friend',
+              type: 'POST',
+              data: JSON.stringify(friendsData),
+              contentType: 'application/json',
+
+            });
+            request.done(function(data) {
+              console.log(JSON.stringify(data));
+              console.log("Added As Friend");
+              this.setState({
+                disable:true,
+                addFriend: "Friends"
               });
-              request.done(function(data) {
-                console.log(JSON.stringify(data));
-                console.log("Added As Friend");
-                this.setState({
-                  disable:true,
-                  addFriend: "Friends"
-                });
+            }.bind(this));
+            request.fail(function() {
+                console.log("Error sending Friend request");
               }.bind(this));
-              request.fail(function() {
-                  console.log("Error sending Friend request");
-                }.bind(this));
-
-
-              }
+          }
 
   componentDidMount(){
-    console.log("props.username======",this.props.username);
-
-    console.log("uid",this.state.uid);
-    console.log("Inside ajax call of did mount in Profile====");
 
     var request = $.ajax({
     url: restUrl + '/api/v1/profile/'+this.state.uid,
@@ -181,9 +209,6 @@ export default class Profile extends React.Component{
     contentType: 'application/json',
     });
     request.done(function(data) {
-    console.log("Inside Success of Ajx in User profile===entire data is ",JSON.stringify(data));
-    console.log("Inside Success of Ajx in User profile===entire data is ",data);
-    console.log("Inside Success of Ajx in User profile===arr[0] is ",data[0]);
     this.setState({arr: data});
     }.bind(this));
     request.fail(function() {
@@ -230,10 +255,7 @@ export default class Profile extends React.Component{
     ];
 
 
-    console.log("arr[0]",this.state.arr);
-    // this.state.Profile.username.value.split("@")[0]
-    // var profile = this.state.arr[0];
-    // console.log(profile);
+
     if(this.state.arr === [] || this.state.arr == null || this.state.arr[0] == undefined)
     { return (<div><p>Loading...........</p></div>) }
     else{
@@ -344,12 +366,9 @@ export default class Profile extends React.Component{
           <br/>
           <CardMedia>
             <div className="row">
-              <div className="col-xs-5 col-sm-5 col-md-5 col-lg-7" style={styles} >
+              <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12" style={styles} >
                 <h2>Create your Own Tournament</h2>
-                <RaisedButton label="Start Here" secondary={true}/>
-              </div>
-              <div className="col-xs-2 col-sm-2 col-md-2 col-lg-2" style={styles}>
-                  <img style={styles} src="http://lorempixel.com/100/100/technics" />
+                <RaisedButton label="Start Here" secondary={true} containerElement={<Link to="/create" />}/>
               </div>
             </div>
           </CardMedia>
@@ -358,7 +377,7 @@ export default class Profile extends React.Component{
           <br/>
           <div className="row">
             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12" style={style1}>
-            <h3>Followed Topics</h3>
+            <h3>Popular Topics</h3>
             </div>
             <div className="row">
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3" style={styles}>

@@ -4,7 +4,7 @@ var context = require('../../context');
 var mesh = context.mesh;
 
 controller.getTopic = function(req, res) {
-  console.log("topic Id in controller",req.param("id"));
+  // console.log("topic Id in controller",req.param("id"));
   const TopicData = {
     id :req.param("id")
   };

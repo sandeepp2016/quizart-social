@@ -20,16 +20,15 @@ exports = module.exports = function(options) {
 
    const userAnalytics = connection.model('userAnalytics', require('./userAnalytics.schema.js'));
 
-   this.add('role:analytics,cmd:create', function(msg, respond) {
-          console.log("msg===="+msg+"=====");
-        return  userAnalytics.create(msg,function(err,newpost){
-             if(err){
-                      return respond(err);
-                 }
-              else return respond(null,{response:'success',entity:newpost});
-     });
-});
-
+  this.add('role:analytics,cmd:create', function(msg, respond) {
+        //  console.log("msg===="+msg+"=====");
+       return  userAnalytics.create(msg,function(err,newpost){
+            if(err){
+                     return respond(err);
+                }
+             else return respond(null,{response:'success',entity:newpost});
+    });
+  });
 
   this.add('role:analytics,cmd:dangerouslyDeleteAllAnalytics', function(msg, respond) {
     return userAnalytics.remove({}, function(err) {

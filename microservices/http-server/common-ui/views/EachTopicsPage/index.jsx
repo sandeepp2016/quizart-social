@@ -4,7 +4,7 @@ import ChatDrawer from '../../components/Chat/ChatDrawer';
 import AbtTopic from '../../components/AbtTopic';
 import MediaQuery from 'react-responsive';
 import TabsMobile from '../../components/Tabs';
-
+import Timeline from '../../components/Timeline';
 export default class EachTopicsPage extends React.Component {
   constructor() {
     super();
@@ -40,8 +40,8 @@ export default class EachTopicsPage extends React.Component {
                           <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-lg-offset-1" >
                             <AbtTopic id={this.props.params.id}/>
                           </div>
-                          <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
-
+                           <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
+                           <Timeline hashtag ="topic"/>
                           </div>
                           <div className="col-xs-1 col-sm-1 col-md-1 col-lg-1"  style={{paddingTop:20}}>
                             <ChatDrawer/>

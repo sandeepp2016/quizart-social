@@ -89,8 +89,7 @@ export default class QuizPlay extends React.Component{
       score:[],
       names:[],
       seconds:0,
-      seconds2:0,
-      resTime:0,
+      // seconds2:0,
       progress: 10,
       option0Color: grey100,
       option1Color: grey100,
@@ -129,7 +128,6 @@ export default class QuizPlay extends React.Component{
               clearInterval(timer);
             else
             that.setState({seconds:seconds--});
-            console.log("seconds",that.state.seconds);
            },1000)
           that.setState({ques:data.msg})
           // console.log("===============ques================",data.msg);
@@ -193,7 +191,6 @@ export default class QuizPlay extends React.Component{
           that.setState({serverId:msg});
         })
   }
-
   changeOptionColor(value,color){
     switch(value){
     case this.state.ques.options[0]: this.setState({option0Color:color})
@@ -207,17 +204,12 @@ export default class QuizPlay extends React.Component{
   }
   }
     onClick(value,e){
-      var that = this;
 
-      console.log("===================seconds when clicked===============",that.state.seconds);
+      console.log("===================seconds when clicked===============",this.state.seconds);
       const resSeconds = this.state.seconds;
       console.log("===============Time==================",resSeconds);
-      // this.setState({seconds2:this.state.seconds});
-      // this.setState({resTime:(10-resSeconds)});
       var res = (10-resSeconds);
-      // console.log("response time",this.state.resTime);
       console.log("response time",res);
-      // this.setState({resTime:res});
       this.analyseData(value,res);
       this.setState({answered:true});
       this.setState({enabled:false});
@@ -229,17 +221,16 @@ export default class QuizPlay extends React.Component{
       this.context.socket.emit('myAnswer',socketObj);
       switch(value){
       }
-
-      //*------------------*
     }
-    analyseData(value,res){
-      console.log("=================value OPTION=============",value);
-      console.log("=================response=============",res);
 
-      var analyticsData={
+    analyseData(value,res){
+      console.log("======================================response time=================================",res);
+
+      console.log("======================================value=================================",value);
+      var analyticsData = {
         userId:JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub,
         tournamentId: "1234",
-        questionId:"12",
+        questionId:this.state.ques._Id,
         selectedOptionId:value,
         responseTime:res
       }
@@ -258,7 +249,6 @@ export default class QuizPlay extends React.Component{
           console.log("Error");
         }.bind(this));
     }
-
 
   render(){
     var username = JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub;
@@ -308,7 +298,6 @@ export default class QuizPlay extends React.Component{
           </div>
           <div style={Style2}>
               <CircularProgress size={1.8}  />
-
             </div>
             </div>
           ):(
@@ -367,7 +356,6 @@ export default class QuizPlay extends React.Component{
                   </div>
                   <div className='row'>
                     <div className='col-lg-4 col-xs-4 col-md-4 col-sm-4'>
-
                     </div>
                     <div className='col-lg-4 col-xs-4 col-md-4 col-sm-4'>
                       <div className='row center-xs'> <h4>{this.state.seconds}</h4> </div>
@@ -383,14 +371,12 @@ export default class QuizPlay extends React.Component{
                         <div className='col-xs-12'>
                           <div className='row center-xs'>
                             <div><img src={this.state.ques.image} /></div>
-
                           </div>
                         </div>
                       </div>
                       <div className='row' >
                         <div className='col-xs-12'>
                           <div className='row center-xs'>
-
                             <div><p>{this.state.ques.question}</p></div>
                           </div>
                         </div>
@@ -409,9 +395,7 @@ export default class QuizPlay extends React.Component{
                       <div className='col-xs-6 col-sm-6 col-lg-6 col-md-6'>
                         <RaisedButton disabled={this.state.answered || !this.state.enabled} label={this.state.ques.options[3]} onClick={this.onClick.bind(this,this.state.ques.options[3])}  disabledBackgroundColor={this.state.option3Color} backgroundColor={cyan500} style={optionStyle}/>
                       </div>
-
                     </div>
-
                   </div>
                 </div>
               </div>

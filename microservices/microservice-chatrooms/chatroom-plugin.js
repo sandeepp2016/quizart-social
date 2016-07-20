@@ -86,15 +86,23 @@ exports = module.exports = function(options) {
           }
       ],function(err,retrievedGroupsList){
         if(err) {return respond(err);}
-        // console.log("Inside Plugin retrievedGroupsList:",retrievedGroupsList[0].groups);
-            return Groups.aggregate([
-                { $match:
-                  {topicid:{$in:retrievedGroupsList[0].groups}}
-                }
-            ],function(err,groupData){
-                if(err) {return respond(err); }
-                return respond(null,{response:'success',groups:groupData})
-            });
+        console.log("Inside Plugin retrievedGroupsList:",retrievedGroupsList);
+        console.log("Inside Plugin retrievedGroupsList:",typeof(retrievedGroupsList));
+        if(retrievedGroupsList.length>0){
+          return Groups.aggregate([
+              { $match:
+                {topicid:{$in:retrievedGroupsList[0].groups}}
+              }
+          ],function(err,groupData){
+              if(err) {return respond(err); }
+              return respond(null,{response:'success',groups:groupData})
+          });
+
+        }
+        else{
+          console.log("You are not part of any group");
+          return respond(null,{response:'success',groups:null})
+          }
       });
   });
 
@@ -150,9 +158,20 @@ exports = module.exports = function(options) {
     return Friend.find(
       {subject:{$all:msg.ids},"relation":"friends"},function(err,retrievedRoomId){
         if(err) {return respond(err); }
+        console.log("Inside join private room id, the retrieved room id is",retrievedRoomId);
         return respond(null,{response:'success',roomId:retrievedRoomId})
     });
   });
+
+  this.add('role:chat,cmd:joingrouproom',function(msg,respond){
+    return Groups.find(
+      {subject:{$all:msg.groupname},"relation":"friends"},function(err,retrievedRoomId){
+        if(err) {return respond(err); }
+        return respond(null,{response:'success',roomId:retrievedRoomId})
+    });
+    // db.friends.find({"subject":{$all:["Sandeep","Vigneshwar"]},"relation":"Friends"})
+  });
+};
 
   // this.add('role:chat,cmd:savehistory',function(msg,respond){
   //   console.log("Inside Chatroom plugin to save history");
@@ -193,111 +212,100 @@ exports = module.exports = function(options) {
   //   //   return respond(null,{response:'success',result:result});
   //   // });
   // });
-
-  this.add('role:chat,cmd:savehistory',function(msg,respond){
-    console.log("Inside the save history plugin");
-    console.log("Inside Sve history plugin, msg is ===",msg.ChatMsg.topicid[0]);
-    console.log("Inside Sve history plugin, msg is ===",typeof(msg.ChatMsg.topicid[0]));
-    console.log("Inside Sve history plugin, msg is ===",msg.ChatMsg.message);
-    console.log("Inside Sve history plugin, msg is ===",msg.ChatMsg.sentby);
-    console.log("Inside Sve history plugin, msg is ===",MsgObj);
-    var topicid = 3210;
-    var sentby = msg.ChatMsg.sentby;
-    var message = msg.ChatMsg.message;
-    console.log("topicid",topicid);
-    console.log("message",message);
-    console.log("sentby",sentby);
-    if(!MsgObj[topicid]){
-            var msgFromClient = {
-              message: message,
-              sentby: sentby
-            }
-            console.log("Msg from client is===",msgFromClient);
-            console.log("topic id to put into obj",topicid);
-            MsgObj[topicid] = [msgFromClient];
-            console.log("Msgobj updated is ",MsgObj);
-            return respond(null,{response:'success',result:MsgObj});
-    }
-    else{
-      console.log("inside else loop");
-          var arr = MsgObj[topicid];
-          console.log("Length of array for the topic id"+topicid+"is"+arr.length);
-          var msgFromClient = {
-            message: message,
-            sentby: sentby
-          }
-          if(arr.length>=20){
-            fs.mkdir('/data/chathistory/'+topicid,function(err,result){
-
-              console.log("Inside loop for creating directory");
-              if(err){
-                console.log("Inside loop for creating directory and ther is an error logging the error",err);
-                console.log("Inside loop for creating directory and ther is an error");
-                  if(err.code === "EEXIST"){
-                    console.log("History already Exist");
-                    fs.readdir('/data/chathistory/'+topicid,function(err,files){
-                        console.log("Inside Read File directory, retrieved number of files are,==",files);
-                        console.log("Inside Read File directory, retrieved number of files length is,==",files.length);
-                        var fileNumber = files.length;
-                        var file = '/data/chathistory/'+topicid+'/'+topicid+'-'+(fileNumber+1)+'.json';
-                        console.log("Inside loop for creating directory the new file to be written in old folder is ",file);
-                        fs.writeFile(file,JSON.stringify(MsgObj),'utf-8',function cb(err,data){
-                            if(err){return respond(err);}
-                            MsgObj[topicid] = [];
-                            MsgObj[topicid] = [msgFromClient];
-                            return respond (null,{response:'success',result:MsgObj});
-                        });
-                    });
-                  }
-                // console.log("Error inside mkdir",err.code); return respond(err);
-              }
-              else{
-                console.log("Inside loop for creating directory and ther is no folder existing ,so folder created");
-                var file = '/data/chathistory/'+topicid+'/'+topicid+'-1.json';
-                console.log("Inside loop for creating directory the new file to be written in new folder is ",file);
-                fs.writeFile(file,JSON.stringify(MsgObj),'utf-8',function cb(err,data){
-                    if(err){return respond(err);}
-                    MsgObj[topicid] = [];
-                    MsgObj[topicid] = [msgFromClient];
-                    return respond (null,{response:'success',result:MsgObj});
-                });
-              }
-            });
-          }
-          else{
-            arr.unshift(msgFromClient);
-            MsgObj[topicid] = arr;
-            console.log("inside save and update history, the MsgObj now is===",MsgObj);
-            return respond(null,{response:'success',result:MsgObj});
-          }
-        }
-  });
-
-  this.add('role:chat,cmd:retrievechathistory',function(msg,respond){
-    console.log("Inside Chatroom plugin , to retrieve history",msg.fileid);
-    // var file ='./jsonfiles/'+msg.fileid;
-    fs.readdir('./jsonfiles/'+msg.fileid,function(err,files){
-      if(err){return respond(err);}
-        console.log("Inside Read File directory, retrieved number of files are,==",files);
-        console.log("Inside Read File directory, retrieved number of files length is,==",files.length);
-        var fileNumber = files.length;
-        var fileToRead = '/data/chathistory/'+msg.fileid+'/'+msg.fileid+'-'+fileNumber+'.json';
-        console.log("FileToRead is ",fileToRead);
-        fs.readFile(fileToRead,'utf-8',function cb(err,data){
-          if(err){return respond(err);}
-          obj = JSON.parse(data);
-          return respond (null,{response:'success',retrievedHistory:obj});
-        });
-      });
-  });
-
-
-  // this.add('role:chat,cmd:joingrouproom',function(msg,respond){
-  //   return Groups.find(
-  //     {subject:{$all:msg.groupname},"relation":"friends"},function(err,retrievedRoomId){
-  //       if(err) {return respond(err); }
-  //       return respond(null,{response:'success',roomId:retrievedRoomId})
-  //   });
-  //   // db.friends.find({"subject":{$all:["Sandeep","Vigneshwar"]},"relation":"Friends"})
+  //
+  // this.add('role:chat,cmd:savehistory',function(msg,respond){
+  //   console.log("Inside the save history plugin");
+  //   console.log("Inside Sve history plugin, msg is ===",msg.ChatMsg.topicid[0]);
+  //   console.log("Inside Sve history plugin, msg is ===",typeof(msg.ChatMsg.topicid[0]));
+  //   console.log("Inside Sve history plugin, msg is ===",msg.ChatMsg.message);
+  //   console.log("Inside Sve history plugin, msg is ===",msg.ChatMsg.sentby);
+  //   console.log("Inside Sve history plugin, msg is ===",MsgObj);
+  //   var topicid = 3210;
+  //   var sentby = msg.ChatMsg.sentby;
+  //   var message = msg.ChatMsg.message;
+  //   console.log("topicid",topicid);
+  //   console.log("message",message);
+  //   console.log("sentby",sentby);
+  //   if(!MsgObj[topicid]){
+  //           var msgFromClient = {
+  //             message: message,
+  //             sentby: sentby
+  //           }
+  //           console.log("Msg from client is===",msgFromClient);
+  //           console.log("topic id to put into obj",topicid);
+  //           MsgObj[topicid] = [msgFromClient];
+  //           console.log("Msgobj updated is ",MsgObj);
+  //           return respond(null,{response:'success',result:MsgObj});
+  //   }
+  //   else{
+  //     console.log("inside else loop");
+  //         var arr = MsgObj[topicid];
+  //         console.log("Length of array for the topic id"+topicid+"is"+arr.length);
+  //         var msgFromClient = {
+  //           message: message,
+  //           sentby: sentby
+  //         }
+  //         if(arr.length>=20){
+  //           fs.mkdir('/data/chathistory/'+topicid,function(err,result){
+  //
+  //             console.log("Inside loop for creating directory");
+  //             if(err){
+  //               console.log("Inside loop for creating directory and ther is an error logging the error",err);
+  //               console.log("Inside loop for creating directory and ther is an error");
+  //                 if(err.code === "EEXIST"){
+  //                   console.log("History already Exist");
+  //                   fs.readdir('/data/chathistory/'+topicid,function(err,files){
+  //                       console.log("Inside Read File directory, retrieved number of files are,==",files);
+  //                       console.log("Inside Read File directory, retrieved number of files length is,==",files.length);
+  //                       var fileNumber = files.length;
+  //                       var file = '/data/chathistory/'+topicid+'/'+topicid+'-'+(fileNumber+1)+'.json';
+  //                       console.log("Inside loop for creating directory the new file to be written in old folder is ",file);
+  //                       fs.writeFile(file,JSON.stringify(MsgObj),'utf-8',function cb(err,data){
+  //                           if(err){return respond(err);}
+  //                           MsgObj[topicid] = [];
+  //                           MsgObj[topicid] = [msgFromClient];
+  //                           return respond (null,{response:'success',result:MsgObj});
+  //                       });
+  //                   });
+  //                 }
+  //               // console.log("Error inside mkdir",err.code); return respond(err);
+  //             }
+  //             else{
+  //               console.log("Inside loop for creating directory and ther is no folder existing ,so folder created");
+  //               var file = '/data/chathistory/'+topicid+'/'+topicid+'-1.json';
+  //               console.log("Inside loop for creating directory the new file to be written in new folder is ",file);
+  //               fs.writeFile(file,JSON.stringify(MsgObj),'utf-8',function cb(err,data){
+  //                   if(err){return respond(err);}
+  //                   MsgObj[topicid] = [];
+  //                   MsgObj[topicid] = [msgFromClient];
+  //                   return respond (null,{response:'success',result:MsgObj});
+  //               });
+  //             }
+  //           });
+  //         }
+  //         else{
+  //           arr.unshift(msgFromClient);
+  //           MsgObj[topicid] = arr;
+  //           console.log("inside save and update history, the MsgObj now is===",MsgObj);
+  //           return respond(null,{response:'success',result:MsgObj});
+  //         }
+  //       }
   // });
-};
+
+  // this.add('role:chat,cmd:retrievechathistory',function(msg,respond){
+  //   console.log("Inside Chatroom plugin , to retrieve history",msg.fileid);
+  //   // var file ='./jsonfiles/'+msg.fileid;
+  //   fs.readdir('./jsonfiles/'+msg.fileid,function(err,files){
+  //     if(err){return respond(err);}
+  //       console.log("Inside Read File directory, retrieved number of files are,==",files);
+  //       console.log("Inside Read File directory, retrieved number of files length is,==",files.length);
+  //       var fileNumber = files.length;
+  //       var fileToRead = '/data/chathistory/'+msg.fileid+'/'+msg.fileid+'-'+fileNumber+'.json';
+  //       console.log("FileToRead is ",fileToRead);
+  //       fs.readFile(fileToRead,'utf-8',function cb(err,data){
+  //         if(err){return respond(err);}
+  //         obj = JSON.parse(data);
+  //         return respond (null,{response:'success',retrievedHistory:obj});
+  //       });
+  //     });
+  // });

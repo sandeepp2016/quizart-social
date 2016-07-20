@@ -17,6 +17,10 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+.muidocs-icon-Communication-link:after {
+    content: "link";
+}
+
 .muidocs-icon-action-thumb-up:after {
     content: "thumb_up";
 }
@@ -96,4 +100,7 @@
 }
 .muidocs-icon-action-favorite_border:after {
     content: "favorite_border";
+}
+.muidocs-icon-action-history:after {
+    content: "history";
 }
